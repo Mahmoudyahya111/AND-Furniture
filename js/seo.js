@@ -15,6 +15,15 @@
     ld({ '@context': 'https://schema.org', '@type': 'FurnitureStore', name: 'AND.Furniture', url: B, logo: B + 'img/logo-512.png', telephone: '+201226071020', sameAs: ['https://www.facebook.com/AND.Furniture26'], areaServed: 'EG' });
     ld({ '@context': 'https://schema.org', '@type': 'WebSite', name: 'AND.Furniture', url: B, inLanguage: ['ar', 'en'] });
   }
+
+  /* heading structure: exactly one h1 per page */
+  function fixH() {
+    var h = d.querySelectorAll('h1');
+    if (h.length > 1) for (var i = 1; i < h.length; i++) { h[i].setAttribute('role', 'heading'); h[i].setAttribute('aria-level', '2'); }
+    if (!h.length && d.getElementById('main')) { var x = d.createElement('h1'); x.textContent = d.title.split('|')[0].trim(); x.style.cssText = 'position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap'; d.getElementById('main').insertBefore(x, d.getElementById('main').firstChild); }
+    if (page === 'index.html' || page === '') { var ar = d.documentElement.lang === 'ar'; d.title = ar ? 'AND.Furniture | أثاث منزلي في مصر' : 'AND.Furniture | Home furniture in Egypt'; meta('property', 'og:title', d.title); meta('name', 'twitter:title', d.title); }
+  }
+  addEventListener('load', function () { setTimeout(fixH, 1800); });
   window.ANDSEO = {
     product: function (p, name, desc, imgs) {
       d.querySelectorAll('script[data-seo-p]').forEach(function (x) { x.remove(); });

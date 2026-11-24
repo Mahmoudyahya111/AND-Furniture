@@ -57,3 +57,4 @@ Each change is its own commit. Undo one with `git revert <hash>`.
 - Product pages: Product + Offer (EGP, stock based availability) + BreadcrumbList data are added from the live product record. Sample/placeholder products are set to noindex and get no Product data, so fake items are not offered to Google.
 - robots.txt (blocks admin) and sitemap.xml (home, shop, about, contact). Product URLs are added to the sitemap once real products exist.
 - Limit: products are rendered by JavaScript. Google renders JS, but slower than static HTML. If organic search matters, a build step that generates one static page per product is the next step.
+- seo.js also enforces one h1 per page (extra h1 on home become level-2 headings for crawlers, a hidden h1 is added where a page had none) and sets a descriptive home title (AR/EN).
