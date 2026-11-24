@@ -104,3 +104,4 @@ Each change is its own commit. Undo one with `git revert <hash>`.
 - #42 Product page: lift chat/WhatsApp buttons above the sticky buy bar while it is visible (js/pages.js, css/premium.css).
 - #43 Product page: related cards shown immediately (they were stuck at opacity 0 waiting for the scroll reveal).
 - #44 Admin chart motion (AND): js/chartfx.js (presentation only): KPI numbers count up once per tab, daily revenue bars grow in, reduced-motion respected. Revert: remove the script tag in admin.html.
+- #45 Admin Settings: async panels (chat alert, order emails) no longer throw if you switch tab before they finish loading (found in the light-mode pass; js/admin.js).
