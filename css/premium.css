@@ -83,3 +83,10 @@ html[data-theme=dark] header.top nav.links a.on{color:var(--gold)}
 html[data-theme=dark] .chat-box header{background:#2a2019;color:var(--gold);border-bottom:1px solid var(--line)}
 html[data-theme=dark] .m.v{background:var(--gold);color:#241a10}html[data-theme=dark] .m.s{background:#2a2019;color:var(--ink);border-color:var(--line)}
 html[data-theme=dark] .chat-box{border:1px solid var(--line)}
+html[data-theme=dark] .modal .box,html[data-theme=dark] .mh,html[data-theme=dark] .stickyb{background:var(--card);color:var(--ink)}
+html[data-theme=dark] .imgrow .ib button{background:#2a2019;color:var(--ink);border-color:var(--line)}
+html[data-theme=dark] .imgrow .ib button.x{background:#7a2f28;color:#fff}
+html[data-theme=dark] .icol,html[data-theme=dark] select,html[data-theme=dark] .rowf input{background:#1b1510;color:var(--ink);border-color:var(--line)}
+html[data-theme=dark] fieldset{border-color:var(--line)}html[data-theme=dark] legend,html[data-theme=dark] label{color:var(--ink)}
+html[data-theme=dark] .btn.sm,html[data-theme=dark] .btn.ghost{background:transparent;color:var(--ink);border-color:#5a4a3a}
+html[data-theme=dark] .btn.danger,html[data-theme=dark] .btn.del{color:#fff}
