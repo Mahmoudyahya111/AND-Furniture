@@ -5,9 +5,9 @@
 (function () {
   var C = window.AND_CFG; if (!C || !C.url || !C.key) return;
   try {
-    if (/bot|crawl|spider|headless|lighthouse|preview/i.test(navigator.userAgent)) return;
-    if (navigator.webdriver && localStorage.getItem('and_qa') !== '1') return;
-    if (navigator.doNotTrack === '1') return;
+    if (localStorage.getItem('and_qa') !== '1') {
+      if (/bot|crawl|spider|headless|lighthouse|preview/i.test(navigator.userAgent) || navigator.webdriver || navigator.doNotTrack === '1') return;
+    }
   } catch (e) { }
   var q = new URLSearchParams(location.search), ss = sessionStorage, sid = ss.getItem('and_sid');
   if (!sid) { sid = (window.crypto && crypto.randomUUID ? crypto.randomUUID() : String(Math.random()).slice(2) + Date.now()).replace(/-/g, '').slice(0, 32); ss.setItem('and_sid', sid); }
