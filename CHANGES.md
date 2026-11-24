@@ -10,3 +10,4 @@ Each change is its own commit. Undo one with `git revert <hash>`.
 | 4 | Admin chart bar width, chat opens the latest conversation, cart line wraps on narrow phones |
 | 5 | Bundled the Supabase library in the repo (no CDN dependency) and added version query strings to scripts and styles so phones never keep an old cached config.js (the cause of "not connected to the database" on the first phone visit) |
 | 6 | Furniture fields in the database (SKU, W/D/H, weight, assembly, warranty, origin, care, lead time, low-stock threshold) plus realistic sample values (sql/03, sql/04). Additive only, backup taken first |
+| 7 | Admin product editor rebuilt: sections, stock stepper, low-stock alert, image upload/replace/reorder/main, furniture specs; product list search, Low/Out badges and filter |
