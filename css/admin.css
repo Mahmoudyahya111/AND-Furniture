@@ -43,3 +43,8 @@ fieldset{border:1px solid var(--line);border-radius:12px;padding:12px 14px 14px;
 .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin-bottom:14px}
 @media(max-width:700px){.kpis{grid-template-columns:1fr 1fr}.presets{width:100%}.presets .btn{flex:1}}
 @media(max-width:700px){.tbl.plain{display:table;background:#fff;border:1px solid var(--line)}.tbl.plain tbody{display:table-row-group}.tbl.plain tr{display:table-row;border:0;margin:0;padding:0;border-radius:0}.tbl.plain td{display:table-cell;border-bottom:1px solid var(--line);padding:8px;text-align:start}.tbl.plain td>*{max-width:none}}
+/* marketing */
+details.mk{background:#fff;border:1px solid var(--line);border-radius:14px;margin-bottom:10px;overflow:hidden}details.mk>summary{cursor:pointer;padding:14px 16px;font-weight:800;color:var(--taupe);list-style:none;min-height:48px;display:flex;align-items:center}details.mk>summary::-webkit-details-marker{display:none}details.mk>summary::after{content:"+";margin-inline-start:auto;font-size:1.4rem}details.mk[open]>summary::after{content:"−"}.mkb{padding:4px 16px 16px}
+.chk{display:flex;gap:10px 16px;flex-wrap:wrap}.chk label{display:flex;gap:6px;align-items:center;margin:0}.chk input{width:auto;min-height:0}
+textarea.mkt{width:100%;font:inherit;padding:10px;border:1.5px solid var(--line);border-radius:10px;margin:8px 0}.cvw{margin:12px 0;text-align:center}.cvw canvas{max-width:100%;height:auto;max-height:70vh;border:1px solid var(--line);border-radius:12px;background:#fff}
+.mkb h4{margin:14px 0 4px}

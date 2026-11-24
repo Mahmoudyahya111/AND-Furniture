@@ -25,3 +25,4 @@ Each change is its own commit. Undo one with `git revert <hash>`.
 | 19 | PDF subtitles use plain date ranges (the helvetica font has no arrow glyph) |
 | 20 | Fix: order dialog no longer throws for the view-only chat support role |
 | 21 | Admin: tables without a header row (order items) stay as normal tables on phones |
+| 22 | Admin Marketing page (owner/admin): strategy planner, content calendar, caption and ad-copy templates from product data, post/story image designer (canvas, downloads PNG), video shot lists and scripts, campaign tracker with ROI, discount ideas, cheap video tools list (prices from official pages, checked 2026-11-24). Templates only, no AI service. Table marketing_items (sql/08) |
