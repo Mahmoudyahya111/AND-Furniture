@@ -45,13 +45,13 @@ create policy "anyone reads settings" on site_settings for select using (key <> 
 drop policy if exists "owner writes settings" on site_settings;
 create policy "owner writes settings" on site_settings for all using (is_owner() and key<>'owner_email') with check (is_owner() and key<>'owner_email');
 
--- Owner handover: owner (or the very first call when no owner exists) sets the new owner email.
+-- Owner handover: only the current owner can change the owner email.
 create or replace function public.transfer_ownership(p_email text, p_demote_me boolean default false) returns void
 language plpgsql security definer set search_path=public as $$
 declare e text := lower(trim(p_email)); me uuid := auth.uid();
 begin
   if e is null or e !~ '^[^@\s]+@[^@\s]+\.[^@\s]+$' then raise exception 'invalid email'; end if;
-  if exists (select 1 from profiles where role='owner') and not is_owner() then raise exception 'owner only'; end if;
+  if not is_owner() then raise exception 'owner only'; end if;
   insert into site_settings(key,value) values ('owner_email', to_jsonb(e)) on conflict (key) do update set value=excluded.value, updated_at=now();
   update profiles set role='owner' where lower(email)=e;
   if p_demote_me and me is not null and not exists (select 1 from profiles where id=me and lower(email)=e) then
@@ -146,7 +146,7 @@ grant execute on function public.place_order(jsonb) to anon, authenticated;
 create or replace function public.track_order(p_number text, p_phone text) returns jsonb language plpgsql security definer set search_path=public as $$
 declare o orders%rowtype;
 begin
-  select * into o from orders where upper(number)=upper(trim(p_number)) and regexp_replace(phone,'\D','','g') = regexp_replace(p_phone,'\D','','g');
+  select * into o from orders where upper(number)=upper(trim(p_number)) and right(regexp_replace(phone,'\D','','g'),10) = right(regexp_replace(p_phone,'\D','','g'),10) and length(regexp_replace(p_phone,'\D','','g'))>=8;
   if not found then return null; end if;
   return jsonb_build_object('number',o.number,'status',o.status,'payment_status',o.payment_status,'total',o.total,'delivery_fee',o.delivery_fee,'items',o.items,'created_at',o.created_at,
     'events',(select coalesce(jsonb_agg(jsonb_build_object('status',status,'at',created_at) order by created_at),'[]') from order_events where order_id=o.id));
