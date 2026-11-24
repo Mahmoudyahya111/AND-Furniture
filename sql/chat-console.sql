@@ -68,3 +68,4 @@ begin if length(coalesce(p_token,''))<16 or p_rating not between 1 and 5 then ra
 revoke execute on function set_presence(text), set_my_alias(text), agent_login(), agent_logout(), staff_list(), chat_claim(bigint), chat_transfer(bigint,uuid), chat_close(bigint), chat_staff_send(bigint,text), chat_display_name(uuid) from public, anon;
 grant execute on function set_presence(text), set_my_alias(text), agent_login(), agent_logout(), staff_list(), chat_claim(bigint), chat_transfer(bigint,uuid), chat_close(bigint), chat_staff_send(bigint,text) to authenticated;
 revoke execute on function chat_visitor_rate(text,int,boolean,text) from public; grant execute on function chat_visitor_rate(text,int,boolean,text) to anon, authenticated;
+alter table chat_messages drop constraint chat_messages_sender_check; alter table chat_messages add constraint chat_messages_sender_check check (sender in ('visitor','staff','system'));
