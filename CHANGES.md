@@ -17,3 +17,4 @@ Each change is its own commit. Undo one with `git revert <hash>`.
 | 11 | Sample products: structured dimensions replace the free-text size; admin table cells wrap long emails |
 | 12 | Audit fixes (store): English colour names, compare-at price wraps inside cards, no repeated placeholder note on cards, footer links tap size and clearance for floating buttons, smaller hero logo on phones |
 | 13 | Audit fixes: chat panel fits phones, WhatsApp floating button hidden where the page already has a WhatsApp button, cart shows translated colour names |
+| 14 | Admin: the active tab scrolls into view on phones |

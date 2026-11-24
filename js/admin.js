@@ -74,6 +74,7 @@
     if (!TABS().some(function (x) { return x[0] === t; })) t = 'dash'; tab = t; location.hash = t; timers.forEach(clearInterval); timers = [];
     var b = await badge();
     $('#tabs').innerHTML = TABS().map(function (x) { var n = x[0] === 'chat' ? b.chat : x[0] === 'orders' ? b.orders : 0; return '<button data-t="' + x[0] + '" class="' + (x[0] === t ? 'on' : '') + '">' + x[1] + (n ? '<span class="bd">' + n + '</span>' : '') + '</button>'; }).join('');
+    var on = $('#tabs button.on'); if (on && on.scrollIntoView) on.scrollIntoView({ inline: 'center', block: 'nearest' });
     $('#view').innerHTML = '<p class="help">…</p>';
     try { await V[t](); } catch (e) { console.error(e); $('#view').innerHTML = '<div class="note err">' + L('حدث خطأ: ', 'Error: ') + esc(e.message || e) + '</div>'; }
   }
