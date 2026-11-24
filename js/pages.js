@@ -94,9 +94,9 @@
       f.onsubmit = async function (e) {
         e.preventDefault(); var er = $('#cerr'); er.innerHTML = ''; if (!AND.live) { er.innerHTML = '<div class="note err">' + t('demo') + '</div>'; return; }
         var b = $('#pb'); b.disabled = true; b.textContent = t('placing');
-        var r = await AND.sb.rpc('place_order', { p: { customer_name: f.n.value, phone: f.p.value, email: f.e.value, governorate: f.g.value, address: f.a.value, notes: f.o.value, payment_method: f.pm.value || 'cod', items: lines().map(function (l) { return { id: l.id, qty: l.qty, color: l.color }; }) } });
+        var r = await AND.sb.rpc('place_order', { p: { customer_name: f.n.value, phone: f.p.value, email: f.e.value, governorate: f.g.value, address: f.a.value, notes: f.o.value, payment_method: f.pm.value || 'cod', attribution: (AND.px && AND.px.utm()) || null, items: lines().map(function (l) { return { id: l.id, qty: l.qty, color: l.color }; }) } });
         if (r.error) { er.innerHTML = '<div class="note err">' + esc(/stock|unavailable/i.test(r.error.message) ? r.error.message : t('err')) + '</div>'; b.disabled = false; b.textContent = t('place'); return; }
-        localStorage.setItem('and_name', f.n.value); AND.cart.clear();
+        localStorage.setItem('and_name', f.n.value); if (AND.px) { try { AND.px.purchase(r.data, lines()); } catch (x) { } } AND.cart.clear();
         box.innerHTML = '<div class="panel" style="text-align:center;max-width:560px;margin:auto"><div style="font-size:3rem;color:var(--ok)">&#10003;</div><h2>' + t('thanks') + '</h2><p>' + t('ordno') + ': <b dir="ltr">' + esc(r.data.number) + '</b></p><p>' + AND.money(r.data.total) + '</p><p class="note">' + t('savenum') + '</p><a class="btn" href="track.html?n=' + encodeURIComponent(r.data.number) + '&p=' + encodeURIComponent(f.p.value) + '">' + t('trackbtn') + '</a></div>';
         window.scrollTo(0, 0);
       };

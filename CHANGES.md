@@ -28,3 +28,10 @@ Each change is its own commit. Undo one with `git revert <hash>`.
 | 22 | Admin Marketing page (owner/admin): strategy planner, content calendar, caption and ad-copy templates from product data, post/story image designer (canvas, downloads PNG), video shot lists and scripts, campaign tracker with ROI, discount ideas, cheap video tools list (prices from official pages, checked 2026-11-24). Templates only, no AI service. Table marketing_items (sql/08) |
 | 23 | Marketing: batch content. Pick products (live list, category filter, in-stock only), number of posts, start date and spacing, language, size, theme and content mix; generates a caption and image per post, each editable, then add all to the calendar as drafts, copy all text, download all images as a ZIP or one by one. Templates only, no AI. |
 | 24 | Storefront redesign step 1 (additive): css/modern.css + js/ui.js on the public pages: animated hero, scroll reveal, card hover lift and image zoom, skeleton loaders, quick view, mini-cart drawer, product image hover-zoom and lightbox with swipe, header shrink, micro-interactions, reduced-motion support. Old look: git tag old-look-before-redesign, or remove the two tags (modern.css, ui.js) from the pages. |
+
+## 25. Facebook (Meta) Pixel + campaign attribution
+- New `js/pixel.js` (storefront only, loads the Meta base code ONLY if an owner saved a numeric Pixel ID in Admin > Settings; stored in site_settings key `pixel`, no schema change).
+- Events: PageView, ViewContent, AddToCart, InitiateCheckout, Purchase (value, EGP), Contact (WhatsApp/chat click).
+- UTM/fbclid captured on landing (30 days, localStorage) and saved on the order in new nullable column `orders.attribution` (additive). `place_order` updated to store it; previous definition backed up in backups/place_order-before-attribution.sql.
+- Admin: Pixel card (validate, save, remove, status check, Test Events steps, consent note, UTM link builder); order detail shows campaign source.
+- Revert: git revert this commit; column can stay (unused).
