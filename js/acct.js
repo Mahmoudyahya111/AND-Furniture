@@ -10,7 +10,7 @@ window.ANDAcct = (function () {
   async function load(sb) {
     var r = await Promise.all([all(sb, 'orders'), all(sb, 'expenses'), all(sb, 'products'), sb.from('order_events').select('order_id,status,created_at').in('status', ['delivered', 'cancelled']).order('created_at')]);
     var ev = { delivered: {}, cancelled: {} }; (r[3].data || []).forEach(function (e) { ev[e.status][e.order_id] = e.created_at; });
-    r[0].forEach(function (o) { o._del = ev.delivered[o.id] || (o.status === 'delivered' ? o.updated_at : null); o._canc = ev.cancelled[o.id] || (o.status === 'cancelled' ? o.updated_at : null); o._ref = o.payment_status === 'refunded' ? o.updated_at : null; });
+    r[0].forEach(function (o) { o._del = ev.delivered[o.id] || (o.status === 'delivered' ? o.updated_at : null); o._canc = ev.cancelled[o.id] || (o.status === 'cancelled' ? o.updated_at : null); o._ref = o.refund_status === 'refunded' ? o.refunded_at : null; });
     return { os: r[0], ls: r[1], ps: r[2] };
   }
   function biz(d, f, t) {
@@ -19,7 +19,7 @@ window.ANDAcct = (function () {
     var purchases = sum(led.filter(function (l) { return l.kind === 'purchase'; }), 'amount'), expenses = sum(led.filter(function (l) { return l.kind === 'expense'; }), 'amount'), other = sum(led.filter(function (l) { return l.kind === 'other_income'; }), 'amount');
     var items = function (o) { return Array.isArray(o.items) ? o.items : []; };
     var rev = sum(del, 'total'), n = del.length, units = del.reduce(function (s, o) { return s + items(o).reduce(function (a, x) { return a + (+x.qty || 1); }, 0); }, 0);
-    var gross = rev - purchases, refundOrders = d.os.filter(function (o) { return o._ref && inR(o._ref); }), refunds = sum(refundOrders, 'total'), net = gross - expenses + other - refunds;
+    var gross = rev - purchases, refundOrders = d.os.filter(function (o) { return o._ref && inR(o._ref); }), refunds = sum(refundOrders, 'refund_amount'), net = gross - expenses + other - refunds;
     var open = d.os.filter(function (o) { return ['delivered', 'cancelled'].indexOf(o.status) < 0; }), cancelled = placed.filter(function (o) { return o.status === 'cancelled'; }).length;
     var dd = del.filter(function (o) { return o._del; }).map(function (o) { return (new Date(o._del) - new Date(o.created_at)) / 864e5; }), fulfil = dd.length ? dd.reduce(function (a, b) { return a + b; }, 0) / dd.length : null;
     var key = function (o) { return o.user_id || o.email || o.phone; }, cust = {}, hist = {};
@@ -44,7 +44,7 @@ window.ANDAcct = (function () {
     var rows = [];
     d.os.filter(function (o) { return o.status === 'delivered'; }).forEach(function (o) { rows.push({ date: iso(o._del || o.created_at), ref: o.number, type: 'order', desc: (o.customer_name || '') + ' - ' + (o.payment_method || ''), debit: 0, credit: +o.total || 0 }); });
     d.ls.forEach(function (l) { var out = l.kind !== 'other_income'; rows.push({ date: iso(l.spent_on), ref: 'LDG-' + l.id, type: l.kind, desc: [l.category, l.supplier, l.note].filter(Boolean).join(' - '), debit: out ? +l.amount : 0, credit: out ? 0 : +l.amount }); });
-    d.os.filter(function (o) { return o._ref; }).forEach(function (o) { rows.push({ date: iso(o._ref), ref: o.number, type: 'refund', desc: o.customer_name || '', debit: +o.total || 0, credit: 0 }); });
+    d.os.filter(function (o) { return o._ref; }).forEach(function (o) { rows.push({ date: iso(o._ref), ref: o.number, type: 'refund', desc: o.customer_name || '', debit: +o.refund_amount || 0, credit: 0 }); });
     rows.sort(function (x, y) { return x.date.localeCompare(y.date) || String(x.ref).localeCompare(String(y.ref)); }); var b = 0; rows.forEach(function (r) { b += r.credit - r.debit; r.bal = b; }); return rows;
   }
   function render(c) {
@@ -78,7 +78,7 @@ window.ANDAcct = (function () {
         '<div class="kpis">' + k2(L('طلبات مُسلّمة', 'Orders delivered'), B.n, dl(B.n, P.n)) + k2(L('متوسط قيمة الطلب', 'Average order value'), E(B.aov), dl(B.aov, P.aov)) + k2(L('وحدات مباعة', 'Units sold'), B.units) + k2(L('تكلفة الطلب', 'Cost per order'), E(B.cpo)) + '</div>' +
         '<div class="kpis">' + k2(L('نقد مستحق عند الاستلام', 'Cash to collect on delivery'), E(B.cod), L('طلبات قيد التنفيذ', 'orders in progress')) + k2(L('بانتظار تأكيد الدفع', 'Awaiting payment (non-COD)'), E(B.awaiting)) + k2(L('طلبات قيد التنفيذ', 'Orders in progress'), B.open) + k2(L('نسبة الإلغاء', 'Cancellation rate'), B.cr == null ? '-' : pct(B.cr), B.cancelled + ' ' + L('ملغي', 'cancelled')) + '</div>' +
         '<div class="kpis">' + k2(L('متوسط أيام التسليم', 'Avg days to deliver'), B.fulfil == null ? '-' : B.fulfil.toFixed(1)) + k2(L('عملاء متكررون', 'Repeat customers'), B.repeat == null ? '-' : pct(B.repeat)) + k2(L('طلبات لتغطية المصروفات', 'Orders to cover expenses'), B.be == null ? '-' : B.be) + k2(L('قيمة المخزون (بالسعر)', 'Stock value (at price)'), E(B.invValue), B.invUnits + ' ' + L('وحدة', 'units')) + '</div>' +
-        '<div class="kpis">' + k2(L('استرداد (طلبات بحالة مستردة)', 'Refunds (orders marked refunded)'), E(B.refunds)) + k2(L('طلبات ملغاة', 'Cancelled orders'), B.cancelled) + '</div>';
+        '<div class="kpis">' + k2(L('مبالغ مستردة', 'Refunds paid'), E(B.refunds)) + k2(L('طلبات ملغاة', 'Cancelled orders'), B.cancelled) + '</div>';
       var dir = '<div class="panel"><h3>' + L('هل نسير في الاتجاه الصحيح؟', 'Are we heading the right way?') + '</h3><p class="help">' + L('حدود إرشادية، بالمقارنة مع الفترة السابقة بنفس الطول.', 'Guide thresholds, compared with the previous period of the same length.') + '</p>' + direction(B, P).map(function (x) { return '<p style="margin:8px 0"><span style="color:' + SC[x.s][0] + '">●</span> <b>' + x.k + '</b>: ' + x.val + ' <small>(' + SC[x.s][1] + ' · ' + x.guide + ')</small></p>'; }).join('') + '</div>';
       var mon = '<h3>' + L('شهرياً', 'By month') + '</h3>' + tb([L('الشهر', 'Month'), L('الإيراد', 'Revenue'), L('مشتريات', 'Purchases'), L('مصروفات', 'Expenses'), L('صافي', 'Net profit')], B.months.map(function (m) { return [m.m, E(m.rev), E(m.pur), E(m.exp), E(m.rev - m.pur - m.exp)]; }));
       var more = '<h3>' + L('أفضل المنتجات', 'Top products') + '</h3>' + tb([L('المنتج', 'Product'), L('وحدات', 'Units'), L('الإيراد', 'Revenue')], B.prods.slice(0, 10).map(function (p) { return [esc(p.name), p.u, E(p.r)]; })) +

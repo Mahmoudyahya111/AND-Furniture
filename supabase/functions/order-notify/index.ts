@@ -52,6 +52,21 @@ Deno.serve(async (req) => {
     if (me?.role !== 'owner') return reply({ error: 'Owner only' }, 403);
     return reply({ gmail_ready: !!(Deno.env.get('SMTP_USER') && Deno.env.get('SMTP_PASS')), resend_ready: !!Deno.env.get('RESEND_API_KEY'), provider: snd?.provider || 'gmail' });
   }
+  if (b.action === 'refund') {   // owner only, after the refund is recorded. Gated by the same switches as the other order emails.
+    const jwt = (req.headers.get('Authorization') || '').replace(/^Bearer\s+/i, '');
+    const { data: u } = jwt ? await admin.auth.getUser(jwt) : { data: null } as any;
+    if (!u?.user) return reply({ error: 'Not signed in' }, 401);
+    const { data: me } = await admin.from('profiles').select('role').eq('id', u.user.id).maybeSingle();
+    if (me?.role !== 'owner') return reply({ error: 'Owner only' }, 403);
+    const rid = Number(b.order_id); if (!Number.isInteger(rid) || rid < 1) return reply({ error: 'Bad request' }, 400);
+    if (!cfg?.enabled || cfg.customer === false || cfg.refund === false) return reply({ skipped: 'off' });
+    const { data: o } = await admin.from('orders').update({ refund_emailed: true }).eq('id', rid).eq('refund_status', 'refunded').eq('refund_emailed', false).select('*').maybeSingle();
+    if (!o || !o.email || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(o.email)) return reply({ skipped: 'nothing to send' });
+    const html = `<div style="font-family:Arial,sans-serif;max-width:520px"><h2 style="margin:0 0 8px">Your refund</h2><p>We refunded <b>${money(o.refund_amount)}</b> for order <b>${esc(o.number)}</b>.</p><p><b>Note:</b> ${esc(o.refund_reason)}</p><p>Depending on your bank or wallet it can take a few days to show.</p></div>`;
+    const r = await send(snd || {}, [o.email], `Refund for order ${o.number}`, html, `We refunded ${money(o.refund_amount)} for order ${o.number}. Note: ${o.refund_reason}`);
+    await admin.from('order_mail_log').insert({ order_id: rid, sent: r.ok ? 1 : 0, note: 'refund: ' + r.note });
+    return reply({ ok: r.ok });
+  }
   const id = Number(b.order_id); if (!Number.isInteger(id) || id < 1) return reply({ error: 'Bad request' }, 400);
   if (!cfg?.enabled) return reply({ skipped: 'off' });
   const { data: o } = await admin.from('orders').update({ mailed_at: new Date().toISOString() }).eq('id', id).is('mailed_at', null).select('*').maybeSingle();
