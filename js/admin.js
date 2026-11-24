@@ -110,7 +110,7 @@
     m.querySelector('[data-x]').onclick = function () { m.remove(); };
     if (role === 'support') { ['ms', 'mp'].forEach(function (k) { if ($('#' + k)) $('#' + k).disabled = true; }); if ($('#msv')) $('#msv').remove(); var ro = document.createElement('p'); ro.className = 'help'; ro.textContent = L('عرض فقط: حساب دعم الدردشة لا يمكنه تغيير الطلبات.', 'View only: chat support cannot change orders.'); m.querySelector('.box').appendChild(ro); }
     $('#mpr').onclick = function () { var w = window.open('', '_blank'); w.document.write('<html dir="' + (AR ? 'rtl' : 'ltr') + '"><body style="font-family:sans-serif"><h2>AND.Furniture - ' + esc(o.number) + '</h2><p>' + esc(o.customer_name) + ' ' + esc(o.phone) + '<br>' + esc(o.governorate || '') + ' ' + esc(o.address) + '</p><table border="1" cellpadding="6" style="border-collapse:collapse">' + o.items.map(function (l) { return '<tr><td>' + esc(AR ? l.name_ar : l.name_en) + '</td><td>' + l.qty + '</td><td>' + l.price * l.qty + '</td></tr>'; }).join('') + '</table><h3>' + L('الإجمالي', 'Total') + ': ' + o.total + ' EGP (' + PM[o.payment_method] + ')</h3></body></html>'); w.document.close(); w.print(); };
-    $('#msv').onclick = async function () {
+    if ($('#msv')) $('#msv').onclick = async function () {
       var s = $('#ms').value, p = $('#mp').value;
       if (s !== o.status) { var r = await sb.rpc('set_order_status', { p_order: o.id, p_status: s }); if (r.error) return toast(r.error.message); }
       if (p !== o.payment_status) { var r2 = await sb.rpc('set_payment_status', { p_order: o.id, p_status: p }); if (r2.error) return toast(r2.error.message); }

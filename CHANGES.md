@@ -23,3 +23,4 @@ Each change is its own commit. Undo one with `git revert <hash>`.
 | 17 | Chat availability setting (follow working hours or manual on/off) and offline notice in the store chat widget (sql/07 chat_status) |
 | 18 | PDF reports bundled locally (jsPDF, Arabic font) for orders, accounting and chat KPIs; phone-friendly "ready" sheet with Download/Open buttons instead of relying on auto-download |
 | 19 | PDF subtitles use plain date ranges (the helvetica font has no arrow glyph) |
+| 20 | Fix: order dialog no longer throws for the view-only chat support role |
