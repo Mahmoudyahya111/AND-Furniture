@@ -91,3 +91,5 @@ Each change is its own commit. Undo one with `git revert <hash>`.
 ## 36. Real-time visitors with ad split (AND Analytics)
 - DB additive (sql/analytics-live.sql): live_presence (one small row per active tab, no access for anyone except through functions), track_ping (anon, length-checked, classifies channel server-side), live_summary (owner/admin).
 - js/track.js sends a heartbeat every 30s while the tab is visible. Admin > Analytics shows "Visitors right now" (last 90 seconds, refresh every 15s): on the site now, from Meta ads, organic/direct, per page with the ad count, live campaigns. With nobody online it shows "0 visitors right now". Real counts only.
+
+- #37 Order emails (AND): table order_mail_cfg (enabled default OFF, customer, staff), orders.mailed_at, order_mail_log, trigger order_mail_new -> edge function order-notify (verify_jwt false, claims each order once). Sender/provider shared with chat_alert_cfg. Inactive until a sender is connected; Settings panel says so. Revert: drop trigger order_mail_new; delete the function.
