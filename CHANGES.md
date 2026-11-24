@@ -58,3 +58,8 @@ Each change is its own commit. Undo one with `git revert <hash>`.
 - robots.txt (blocks admin) and sitemap.xml (home, shop, about, contact). Product URLs are added to the sitemap once real products exist.
 - Limit: products are rendered by JavaScript. Google renders JS, but slower than static HTML. If organic search matters, a build step that generates one static page per product is the next step.
 - seo.js also enforces one h1 per page (extra h1 on home become level-2 headings for crawlers, a hidden h1 is added where a page had none) and sets a descriptive home title (AR/EN).
+
+## 30. Chat console for AND (step 1 of admin parity with TELEGANT)
+- DB additive (sql/chat-console.sql; previous chat functions saved in backups/chat-functions-before-console.sql): chats.claimed_by/claimed_name/first_reply_at/rating/resolved/feedback, profiles.chat_alias, tables agent_presence, presence_log, agent_logins (staff read only), functions set_presence, set_my_alias, agent_login/logout, staff_list, chat_claim, chat_transfer, chat_close, chat_visitor_rate (survey by token), chat_staff_send updated (records first reply and claims the chat). Staff-only functions are not callable signed out.
+- New page chat-admin.html + js/chat-console.js: queue with Active/Mine/Closed/All, search, unread counts, claim, reply with canned replies, transfer (shows agent presence), close, presence (available/break/offline), name customers see, AR/EN, dark/light, phone layout (list then conversation). Header button "Chat console" in the admin.
+- Not yet: the storefront survey form after close, per-agent stats (steps 3), email alerts.
