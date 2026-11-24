@@ -52,7 +52,7 @@
   pages.product = async function () {
     var c = await AND.catalog(), id = new URLSearchParams(location.search).get('id'), p = c.byId[id];
     if (!p) { $('#pd').innerHTML = '<div class="empty">' + t('nores') + '</div>'; return; }
-    document.title = AND.pick(p, 'name') + ' | AND.Furniture';
+    document.title = AND.pick(p, 'name') + ' | AND.Furniture'; try { window.ANDSEO && ANDSEO.product(p, AND.pick(p, 'name'), AND.pick(p, 'desc'), AND.imgsFor(p, (p.colors && p.colors[0]) || '')); } catch (e) { }
     var color = (p.colors && p.colors[0]) || '', imgs = AND.imgsFor(p, color), qty = 1, sale = p.compare_at && Number(p.compare_at) > Number(p.price), out = p.stock <= 0;
     function draw(cur) {
       $('#pd').innerHTML = '<div><div class="main"><img id="mainimg" src="' + esc(imgs[cur || 0]) + '" alt="' + esc(AND.pick(p, 'name')) + '"></div>' + (imgs.length > 1 ? '<div class="thumbs">' + imgs.map(function (u, i) { return '<img src="' + esc(u) + '" data-i="' + i + '" class="' + (i === (cur || 0) ? 'on' : '') + '" alt="">'; }).join('') + '</div>' : '') +

@@ -51,3 +51,9 @@ Each change is its own commit. Undo one with `git revert <hash>`.
 - Admin product editor: each image has a color select ("All colors" or one of the product's colors). Saved as map imageUrl -> color.
 - Storefront: AND.imgsFor(product, color) = that color's images first, then untagged images, fallback to all. Product page swaps gallery when a color is chosen; cards and quick view use the first color's image (quick view switches with its swatches).
 - Revert: git revert; column may stay.
+
+## 29. SEO foundation (AND.Furniture)
+- New js/seo.js on every public page: canonical, absolute og:url/og:image (the old og:image was relative, which social previews ignore), Twitter card, noindex for cart/account/track, FurnitureStore + WebSite data on home (name, logo, phone and Facebook page only, no invented address or ratings).
+- Product pages: Product + Offer (EGP, stock based availability) + BreadcrumbList data are added from the live product record. Sample/placeholder products are set to noindex and get no Product data, so fake items are not offered to Google.
+- robots.txt (blocks admin) and sitemap.xml (home, shop, about, contact). Product URLs are added to the sitemap once real products exist.
+- Limit: products are rendered by JavaScript. Google renders JS, but slower than static HTML. If organic search matters, a build step that generates one static page per product is the next step.
