@@ -85,7 +85,7 @@
       var bar = document.createElement('div'); bar.className = 'pdx-bar'; bar.innerHTML = '<div><b>' + AND.money(p.price) + '</b><small>' + esc(AND.pick(p, 'name')) + '</small></div><button class="btn gold" id="pdbuy"' + (out ? ' disabled' : '') + '>' + (out ? t('out') : t('add')) + '</button>';
       document.body.appendChild(bar);
       $('#pdbuy').onclick = function () { var b = $('#addb'); if (b && !b.disabled) b.click(); };
-      var main = $('#pd'); function vis() { var r = main.querySelector('#addb'); if (!r) return; var b = r.getBoundingClientRect(); bar.classList.toggle('on', b.bottom < 0 || b.top > innerHeight); } addEventListener('scroll', vis, { passive: true }); vis();
+      var main = $('#pd'); function vis() { var r = main.querySelector('#addb'); if (!r) return; var b = r.getBoundingClientRect(); var on = b.bottom < 0 || b.top > innerHeight; bar.classList.toggle('on', on); document.body.classList.toggle('pdbar', on); } addEventListener('scroll', vis, { passive: true }); vis();
       $('#pdshare').onclick = function () { var u = location.href, n = AND.pick(p, 'name'); if (navigator.share) navigator.share({ title: n, url: u }).catch(function () { }); else if (navigator.clipboard) navigator.clipboard.writeText(u).then(function () { AND.toast(L('تم نسخ الرابط', 'Link copied')); }); };
     })();
   };

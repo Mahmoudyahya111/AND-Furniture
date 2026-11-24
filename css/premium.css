@@ -130,3 +130,4 @@ html[data-theme=dark] body.adm span.st.cancelled,html[data-theme=dark] body.adm 
 .pdx-h{margin:26px 0 12px}.pdx .grid{margin-top:0}
 .pdx-bar{display:none}
 @media(max-width:820px){.pdx-bar{display:flex;position:fixed;inset-inline:0;bottom:0;z-index:40;gap:12px;align-items:center;justify-content:space-between;padding:10px 14px calc(10px + env(safe-area-inset-bottom));background:var(--card);border-top:1px solid var(--line);box-shadow:0 -6px 20px rgba(0,0,0,.12);transform:translateY(110%);transition:transform .3s}.pdx-bar.on{transform:none}.pdx-bar div{display:flex;flex-direction:column;min-width:0}.pdx-bar small{color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:48vw}.pdx-bar b{color:var(--taupe)}.pdx-bar .btn{min-height:44px}}
+@media(max-width:820px){body.pdbar .chat-fab,body.pdbar .wa-fab{bottom:84px}body.pdbar .toast{bottom:90px}}
