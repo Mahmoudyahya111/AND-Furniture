@@ -45,3 +45,9 @@ Each change is its own commit. Undo one with `git revert <hash>`.
 - Mobile header: logo + AND.Furniture wordmark + cart + menu; account, language and dark/light moved into the hamburger menu. Header background uses logo tones (light cream/gold, dark espresso/gold).
 - BUG FIX: premium.css redefined @keyframes pgin (with a transform), which modern.css applies to body, so body kept a transform and anchored position:fixed chat/WhatsApp buttons to the page bottom. Renamed to mainin.
 - Home: testimonials removed; stats and trust strip use neutral/settings-driven values (no hardcoded delivery/support claims).
+
+## 28. Color-tagged product images
+- New nullable-safe column products.image_colors jsonb default '{}' (additive; backup of images/colors in backups/products-images-before-colortags.json). Existing products unchanged (no tags = all images shown).
+- Admin product editor: each image has a color select ("All colors" or one of the product's colors). Saved as map imageUrl -> color.
+- Storefront: AND.imgsFor(product, color) = that color's images first, then untagged images, fallback to all. Product page swaps gallery when a color is chosen; cards and quick view use the first color's image (quick view switches with its swatches).
+- Revert: git revert; column may stay.

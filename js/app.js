@@ -109,9 +109,11 @@
   };
   AND.cartBadge = function () { var n = AND.cart.count(); AND.$$('.cart-badge').forEach(function (b) { b.textContent = n; b.style.display = n ? 'grid' : 'none'; }); };
 
+  /* images for a color: tagged images first, then untagged ('all colors'); falls back to all images */
+  AND.imgsFor = function (p, c) { var all = (p.images && p.images.length) ? p.images : ['img/ph/' + p.slug + '.svg'], m = p.image_colors || {}; if (!c || !p.image_colors) return all; var r = all.filter(function (u) { return m[u] === c; }).concat(all.filter(function (u) { return !m[u]; })); return r.length ? r : all; };
   AND.productCard = function (p) {
     var out = p.stock <= 0, sale = p.compare_at && Number(p.compare_at) > Number(p.price);
-    var img = (p.images && p.images[0]) || 'img/ph/' + p.slug + '.svg';
+    var img = AND.imgsFor(p, p.colors && p.colors[0])[0];
     return '<article class="card"><a class="im" href="product.html?id=' + p.id + '" aria-label="' + AND.esc(AND.pick(p, 'name')) + '"><img loading="lazy" src="' + AND.esc(img) + '" alt="' + AND.esc(AND.pick(p, 'name')) + '">' +
       (out ? '<span class="tag out">' + t('out') + '</span>' : sale ? '<span class="tag">' + t('sale') + '</span>' : '') + '</a><div class="bd"><h3><a href="product.html?id=' + p.id + '" style="text-decoration:none">' + AND.esc(AND.pick(p, 'name')) + '</a></h3>' +
       '<div class="price">' + AND.money(p.price) + (sale ? '<s>' + AND.money(p.compare_at) + '</s>' : '') + '</div>' +

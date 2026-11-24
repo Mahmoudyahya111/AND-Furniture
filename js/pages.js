@@ -53,7 +53,7 @@
     var c = await AND.catalog(), id = new URLSearchParams(location.search).get('id'), p = c.byId[id];
     if (!p) { $('#pd').innerHTML = '<div class="empty">' + t('nores') + '</div>'; return; }
     document.title = AND.pick(p, 'name') + ' | AND.Furniture';
-    var imgs = (p.images && p.images.length ? p.images : ['img/ph/' + p.slug + '.svg']), color = (p.colors && p.colors[0]) || '', qty = 1, sale = p.compare_at && Number(p.compare_at) > Number(p.price), out = p.stock <= 0;
+    var color = (p.colors && p.colors[0]) || '', imgs = AND.imgsFor(p, color), qty = 1, sale = p.compare_at && Number(p.compare_at) > Number(p.price), out = p.stock <= 0;
     function draw(cur) {
       $('#pd').innerHTML = '<div><div class="main"><img id="mainimg" src="' + esc(imgs[cur || 0]) + '" alt="' + esc(AND.pick(p, 'name')) + '"></div>' + (imgs.length > 1 ? '<div class="thumbs">' + imgs.map(function (u, i) { return '<img src="' + esc(u) + '" data-i="' + i + '" class="' + (i === (cur || 0) ? 'on' : '') + '" alt="">'; }).join('') + '</div>' : '') +
         (p.is_placeholder ? '<p class="ph-note">' + t('ph') + '</p>' : '') + '</div><div><a href="shop.html" style="color:var(--muted)">&larr; ' + t('back') + '</a><h1>' + esc(AND.pick(p, 'name')) + '</h1><div class="price">' + AND.money(p.price) + (sale ? '<s>' + AND.money(p.compare_at) + '</s>' : '') + '</div>' +
@@ -63,7 +63,7 @@
         '<div class="spec">' + specRows(p, out).map(function (r) { return '<div><span>' + r[0] + '</span><span dir="auto">' + r[1] + '</span></div>'; }).join('') + '</div></div>';
       $('#pd').onclick = function (e) {
         var x = e.target; if (x.getAttribute('data-i') != null) draw(+x.getAttribute('data-i'));
-        if (x.getAttribute('data-col')) { color = x.getAttribute('data-col'); AND.$$('.swatches button').forEach(function (b) { b.classList.toggle('on', b.getAttribute('data-col') === color); }); }
+        if (x.getAttribute('data-col')) { color = x.getAttribute('data-col'); if (p.image_colors && Object.keys(p.image_colors).length) { imgs = AND.imgsFor(p, color); draw(0); return; } AND.$$('.swatches button').forEach(function (b) { b.classList.toggle('on', b.getAttribute('data-col') === color); }); }
         if (x.id === 'mi') { qty = Math.max(1, qty - 1); $('#qv').textContent = qty; } if (x.id === 'pl') { qty = Math.min(Math.min(20, p.stock || 1), qty + 1); $('#qv').textContent = qty; }
         if (x.id === 'addb') { AND.cart.add(p.id, qty, color); AND.toast(t('added')); }
       };

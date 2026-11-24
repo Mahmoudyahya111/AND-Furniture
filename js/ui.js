@@ -26,11 +26,11 @@
     o.addEventListener('click', function (e) { if (e.target === o || e.target.closest('[data-close]')) o.close(); }); return o; }
 
   /* ---- quick view ---- */
-  async function quick(id) { var c = await AND.catalog(), p = c.byId[id]; if (!p) return; var imgs = p.images && p.images.length ? p.images : ['img/ph/' + p.slug + '.svg'], out = p.stock <= 0, sale = p.compare_at && Number(p.compare_at) > Number(p.price), col = (p.colors && p.colors[0]) || '';
+  async function quick(id) { var c = await AND.catalog(), p = c.byId[id]; if (!p) return; var imgs = AND.imgsFor(p, p.colors && p.colors[0]), out = p.stock <= 0, sale = p.compare_at && Number(p.compare_at) > Number(p.price), col = (p.colors && p.colors[0]) || '';
     var o = overlay('qvm', '<div class="sheet"><button class="x" data-close aria-label="' + T.close + '">&times;</button><div class="qg"><div class="qi"><img src="' + esc(imgs[0]) + '" alt="' + esc(AND.pick(p, 'name')) + '"></div><div class="qt"><h3>' + esc(AND.pick(p, 'name')) + '</h3><div class="price">' + AND.money(p.price) + (sale ? '<s>' + AND.money(p.compare_at) + '</s>' : '') + '</div><p>' + esc(AND.pick(p, 'desc')) + '</p>' +
       (p.colors && p.colors.length > 1 ? '<b>' + T.color + '</b><div class="swatches">' + p.colors.map(function (k, i) { return '<button type="button" data-col="' + esc(k) + '" class="' + (i ? '' : 'on') + '">' + esc(k) + '</button>'; }).join('') + '</div>' : '') +
       '<div class="qa"><button class="btn gold" data-qadd ' + (out ? 'disabled' : '') + '>' + (out ? T.out : T.add) + '</button><a class="btn ghost" href="product.html?id=' + p.id + '">' + T.full + '</a></div></div></div></div>');
-    o.addEventListener('click', function (e) { var b = e.target.closest('[data-col]'); if (b) { col = b.getAttribute('data-col'); $$('[data-col]', o).forEach(function (x) { x.classList.toggle('on', x === b); }); } if (e.target.closest('[data-qadd]')) { AND.cart.add(p.id, 1, col); o.close(); } }); }
+    o.addEventListener('click', function (e) { var b = e.target.closest('[data-col]'); if (b) { col = b.getAttribute('data-col'); var qi = $('.qi img', o); if (qi) qi.src = AND.imgsFor(p, col)[0]; $$('[data-col]', o).forEach(function (x) { x.classList.toggle('on', x === b); }); } if (e.target.closest('[data-qadd]')) { AND.cart.add(p.id, 1, col); o.close(); } }); }
 
   /* ---- mini cart drawer ---- */
   var drawer = null;
