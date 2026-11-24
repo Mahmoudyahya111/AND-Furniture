@@ -221,6 +221,13 @@
     var fs = function (n) { return n == null ? '–' : n >= 60 ? Math.floor(n / 60) + L('د ', 'm ') + (n % 60) + L('ث', 's') : n + L('ث', 's'); };
     $('#view').innerHTML = '<div class="rowf"><label>' + L('الفترة', 'Period') + '</label><select id="and">' + [7, 30, 90].map(function (d) { return '<option value="' + d + '"' + (d === days ? ' selected' : '') + '>' + d + ' ' + L('يوم', 'days') + '</option>'; }).join('') + '</select></div><div id="anv" class="help">…</div>';
     $('#and').onchange = function () { cache.anad = +this.value; V.ana(); };
+    var lv = document.createElement('div'); lv.className = 'panel'; $('#view').insertBefore(lv, $('#anv'));
+    var PGL = function (p) { var f = String(p).split('?')[0]; return PG[f] || esc(f); };
+    var live = async function () { if (tab !== 'ana' || !document.body.contains(lv)) return; var r = await sb.rpc('live_summary'); if (r.error || !r.data) return; var d = r.data;
+      lv.innerHTML = '<h3>' + L('الزوار الآن', 'Visitors right now') + ' <small class="help">' + L('(آخر 90 ثانية، يتحدث كل 15 ثانية)', '(last 90 seconds, refreshes every 15s)') + '</small></h3><div class="kpis"><div class="kpi"><b>' + d.now + '</b><span>' + L('زائر الآن', 'On the site now') + '</span></div><div class="kpi"><b>' + d.ads + '</b><span>' + L('قادمون من إعلانات ميتا', 'From Meta ads') + '</span></div><div class="kpi"><b>' + d.organic + '</b><span>' + L('عضوي / مباشر', 'Organic / direct') + '</span></div></div>' +
+        (d.now ? '<div class="tw"><table class="tbl"><tr><th>' + L('الصفحة', 'Page') + '</th><th>' + L('الآن', 'Now') + '</th><th>' + L('من الإعلانات', 'From ads') + '</th></tr>' + d.pages.map(function (p) { return '<tr><td>' + PGL(p.path) + '</td><td>' + p.visitors + '</td><td>' + p.ads + '</td></tr>'; }).join('') + '</table></div>' : '<p class="help">' + L('لا يوجد زوار الآن (0).', '0 visitors right now.') + '</p>') +
+        (d.campaigns.length ? '<div class="help">' + d.campaigns.map(function (c) { return esc(c.campaign) + (c.platform ? ' · ' + esc(c.platform) : '') + ': ' + c.visitors; }).join(' | ') + '</div>' : ''); };
+    live(); var lt = setInterval(function () { if (tab !== 'ana' || !document.body.contains(lv)) { clearInterval(lt); return; } live(); }, 15000);
     var rs = await Promise.all([sb.rpc('analytics_summary', { p_days: days }), sb.from('site_settings').select('value').eq('key', 'pixel').maybeSingle()]);
     if (rs[0].error) throw rs[0].error; var D = rs[0].data, px = rs[1].data && rs[1].data.value && String(rs[1].data.value.id || '').trim();
     var card = function (b, l) { return '<div class="kpi"><b>' + b + '</b><span>' + l + '</span></div>'; };

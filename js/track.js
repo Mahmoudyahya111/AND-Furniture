@@ -25,6 +25,8 @@
     try { fetch(C.url + '/rest/v1/rpc/track_event', { method: 'POST', keepalive: !!keep, headers: { apikey: C.key, Authorization: 'Bearer ' + C.key, 'Content-Type': 'application/json' }, body: JSON.stringify(b) }); } catch (e) { }
   }
   send('view');
+  function ping() { if (document.visibilityState !== 'visible') return; var b = { p_session: sid, p_path: key, p_ref: att.r, p_source: att.s, p_medium: att.m, p_campaign: att.c, p_fbclid: att.f, p_device: device }; try { fetch(C.url + '/rest/v1/rpc/track_ping', { method: 'POST', headers: { apikey: C.key, Authorization: 'Bearer ' + C.key, 'Content-Type': 'application/json' }, body: JSON.stringify(b) }); } catch (e) { } }
+  ping(); setInterval(ping, 30000); document.addEventListener('visibilitychange', function () { if (document.visibilityState === 'visible') ping(); });
   var vis = 0, t0 = document.visibilityState === 'visible' ? Date.now() : 0, sent = false;
   function stop() { if (t0) { vis += Date.now() - t0; t0 = 0; } }
   function flush() { stop(); var s = Math.round(vis / 1000); if (s >= 1 && !sent) { sent = true; send('engage', s, true); } }

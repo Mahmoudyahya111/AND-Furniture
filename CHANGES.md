@@ -87,3 +87,7 @@ Each change is its own commit. Undo one with `git revert <hash>`.
 ## 35. Chat alert settings: provider choice and sender (AND)
 - sql/chat-alerts.sql: chat_alert_cfg.provider ('gmail' default or 'resend', additive). Edge function chat-notify reads provider + sender from the owner's settings on every send, so adding a domain later needs no code change: pick Resend, enter the sender address/name, add the Supabase secret RESEND_API_KEY.
 - Admin > Settings > Email alert panel: on/off, provider, sender address and name, recipients, test email, honest status ("Not connected yet" until the secret exists). The password/API key is never typed in the admin; it lives as a Supabase secret (SMTP_USER/SMTP_PASS or RESEND_API_KEY). Alert stays inactive until connected.
+
+## 36. Real-time visitors with ad split (AND Analytics)
+- DB additive (sql/analytics-live.sql): live_presence (one small row per active tab, no access for anyone except through functions), track_ping (anon, length-checked, classifies channel server-side), live_summary (owner/admin).
+- js/track.js sends a heartbeat every 30s while the tab is visible. Admin > Analytics shows "Visitors right now" (last 90 seconds, refresh every 15s): on the site now, from Meta ads, organic/direct, per page with the ad count, live campaigns. With nobody online it shows "0 visitors right now". Real counts only.
