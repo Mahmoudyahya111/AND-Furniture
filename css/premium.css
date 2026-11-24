@@ -80,3 +80,6 @@ html[data-theme=dark] header.top nav.links a.on{color:var(--gold)}
 .brand span{font-family:'Playfair Display','Cairo',serif;font-weight:700;letter-spacing:.02em;white-space:nowrap}
 @media(max-width:820px){.brand span{display:inline-block!important;font-size:1.12rem;max-width:none}
  nav.links{background:#f8efe0!important}html[data-theme=dark] nav.links{background:#1c140d!important}}
+html[data-theme=dark] .chat-box header{background:#2a2019;color:var(--gold);border-bottom:1px solid var(--line)}
+html[data-theme=dark] .m.v{background:var(--gold);color:#241a10}html[data-theme=dark] .m.s{background:#2a2019;color:var(--ink);border-color:var(--line)}
+html[data-theme=dark] .chat-box{border:1px solid var(--line)}
