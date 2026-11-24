@@ -14,3 +14,4 @@ Each change is its own commit. Undo one with `git revert <hash>`.
 | 8 | Store: product page specification table and "only N left" using each product threshold; mobile-first admin (stacked cards, full-screen editor, wrapping top bar) |
 | 9 | Admin sign-in / create-account redesigned: separate modes with their own forms (confirm password, validation, friendly errors incl. email rate limit, back-to-sign-in); same redesign on the customer account page |
 | 10 | Roles owner/admin/staff (sql/05), team-admin edge function (owner only, service role kept server-side), Admin > Team: create members with a set password, change role, reset password, remove |
+| 11 | Sample products: structured dimensions replace the free-text size; admin table cells wrap long emails |

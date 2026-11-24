@@ -38,3 +38,4 @@ fieldset{border:1px solid var(--line);border-radius:12px;padding:12px 14px 14px;
 .seg{display:grid;grid-template-columns:1fr 1fr;background:#f1eadc;border-radius:12px;padding:4px;margin-bottom:14px}.seg button{border:0;background:none;padding:11px 8px;border-radius:9px;font:inherit;font-weight:700;color:var(--taupe);cursor:pointer;min-height:44px}.seg button.on{background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.15)}
 .auth .f h2{margin:4px 0 0;font-size:1.25rem}.auth .f input{width:100%;min-height:48px;font-size:16px}.auth .f a{text-align:center;padding:6px;color:var(--copper);font-weight:600}.btn.block{width:100%;min-height:50px}
 .acts{display:flex;gap:6px;flex-wrap:wrap}.acts .btn{white-space:nowrap}
+.tbl td{overflow-wrap:anywhere}@media(max-width:700px){.tbl td>*{max-width:68%}}
