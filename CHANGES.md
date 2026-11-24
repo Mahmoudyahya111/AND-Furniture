@@ -22,3 +22,4 @@ Each change is its own commit. Undo one with `git revert <hash>`.
 | 16 | Chat KPI tracker (sql/06 chat_kpis, chat_conversations): per-conversation status/first response/resolution/message counts; per-agent chats, resolved rate, first and average response, resolution time, workload, last active; date and agent filters, daily volume chart |
 | 17 | Chat availability setting (follow working hours or manual on/off) and offline notice in the store chat widget (sql/07 chat_status) |
 | 18 | PDF reports bundled locally (jsPDF, Arabic font) for orders, accounting and chat KPIs; phone-friendly "ready" sheet with Download/Open buttons instead of relying on auto-download |
+| 19 | PDF subtitles use plain date ranges (the helvetica font has no arrow glyph) |
