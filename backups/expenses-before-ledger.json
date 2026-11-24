@@ -1,0 +1,2 @@
+[]
+[{"column_name":"id","data_type":"bigint","column_default":null},{"column_name":"spent_on","data_type":"date","column_default":"CURRENT_DATE"},{"column_name":"category","data_type":"text","column_default":"'other'::text"},{"column_name":"note","data_type":"text","column_default":null},{"column_name":"amount","data_type":"numeric","column_default":null},{"column_name":"created_at","data_type":"timestamp with time zone","column_default":"now()"}]
