@@ -103,3 +103,4 @@ Each change is its own commit. Undo one with `git revert <hash>`.
 - #41 Premium product page (AND): facts strip built only from saved settings (delivery fee / free-delivery threshold / cash on delivery if enabled), Share button (native share or copy link), "You may also like" from the same category, and a mobile sticky buy bar that appears when the main Add button scrolls out of view. No new business claims. Revert: git revert this commit (js/pages.js, css/premium.css).
 - #42 Product page: lift chat/WhatsApp buttons above the sticky buy bar while it is visible (js/pages.js, css/premium.css).
 - #43 Product page: related cards shown immediately (they were stuck at opacity 0 waiting for the scroll reveal).
+- #44 Admin chart motion (AND): js/chartfx.js (presentation only): KPI numbers count up once per tab, daily revenue bars grow in, reduced-motion respected. Revert: remove the script tag in admin.html.
