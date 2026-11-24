@@ -1,5 +1,5 @@
 // AND.Furniture: email owner/support staff when a customer starts a new chat (one email per chat).
-// Needs the secret RESEND_API_KEY (set outside the repo). Config lives in the private table chat_alert_cfg.
+// Needs secrets SMTP_USER + SMTP_PASS (Gmail app password) or RESEND_API_KEY, set outside the repo. Config lives in the private table chat_alert_cfg.
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.45.4';
 const cors = { 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type' };
 const reply = (o: unknown, s = 200) => new Response(JSON.stringify(o), { status: s, headers: { ...cors, 'Content-Type': 'application/json', 'Cache-Control': 'no-store' } });
@@ -8,13 +8,22 @@ const SITE = Deno.env.get('SITE_URL') || 'https://mahmoudyahya111.github.io/AND-
 const admin = createClient(Deno.env.get('SUPABASE_URL')!, Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!, { auth: { persistSession: false } });
 
 async function send(cfg: any, to: string[], subject: string, html: string, text: string) {
-  const key = Deno.env.get('RESEND_API_KEY');
-  if (!key) return { ok: false, note: 'RESEND_API_KEY not set' };
+  const su = Deno.env.get('SMTP_USER'), sp = Deno.env.get('SMTP_PASS'), key = Deno.env.get('RESEND_API_KEY');
+  const nm = cfg.from_name ? String(cfg.from_name).replace(/[<>"\r\n]/g, '') : 'AND.Furniture';
+  if (su && sp) {
+    // Gmail (or any SMTP over TLS, port 465) with an app password. No domain needed. Sends one message per recipient.
+    try {
+      const { SMTPClient } = await import('https://deno.land/x/denomailer@1.6.0/mod.ts');
+      const c = new SMTPClient({ connection: { hostname: Deno.env.get('SMTP_HOST') || 'smtp.gmail.com', port: 465, tls: true, auth: { username: su, password: sp } } });
+      try { for (const t of to) await c.send({ from: `${nm} <${su}>`, to: t, subject, content: text, html }); } finally { await c.close(); }
+      return { ok: true, note: 'sent via smtp' };
+    } catch (e) { return { ok: false, note: 'smtp: ' + String(e).slice(0, 200) }; }
+  }
+  if (!key) return { ok: false, note: 'no email provider set (SMTP_USER/SMTP_PASS or RESEND_API_KEY)' };
   if (!cfg.from_email) return { ok: false, note: 'sender address not set' };
-  const from = cfg.from_name ? `${String(cfg.from_name).replace(/[<>"]/g, '')} <${cfg.from_email}>` : cfg.from_email;
-  const r = await fetch('https://api.resend.com/emails', { method: 'POST', headers: { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json' }, body: JSON.stringify({ from, to, subject, html, text }) });
+  const r = await fetch('https://api.resend.com/emails', { method: 'POST', headers: { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json' }, body: JSON.stringify({ from: `${nm} <${cfg.from_email}>`, to, subject, html, text }) });
   if (!r.ok) return { ok: false, note: `provider ${r.status}: ${(await r.text()).slice(0, 200)}` };
-  return { ok: true, note: 'sent' };
+  return { ok: true, note: 'sent via resend' };
 }
 function mail(name: string, msg: string, at: Date, id: number | string) {
   const when = at.toLocaleString('en-GB', { timeZone: 'Africa/Cairo', dateStyle: 'medium', timeStyle: 'short' }) + ' (Cairo)';
@@ -34,7 +43,7 @@ Deno.serve(async (req) => {
     if (!u?.user) return reply({ error: 'Not signed in' }, 401);
     const { data: me } = await admin.from('profiles').select('role,email').eq('id', u.user.id).maybeSingle();
     if (!me || me.role !== 'owner') return reply({ error: 'Owner only' }, 403);
-    if (b.action === 'status') return reply({ provider_ready: !!Deno.env.get('RESEND_API_KEY') });
+    if (b.action === 'status') return reply({ provider_ready: !!((Deno.env.get('SMTP_USER') && Deno.env.get('SMTP_PASS')) || Deno.env.get('RESEND_API_KEY')), via: Deno.env.get('SMTP_PASS') ? 'smtp' : Deno.env.get('RESEND_API_KEY') ? 'resend' : null });
     if (b.action === 'test') { const m = mail('Test customer', 'This is a test alert. Real alerts show the first message of the new chat.', new Date(), 'TEST'); const r = await send(cfg || {}, [me.email], '[Test] ' + m.subject, m.html, m.text); return reply(r, r.ok ? 200 : 400); }
     return reply({ error: 'Unknown action' }, 400);
   }
