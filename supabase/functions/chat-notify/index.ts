@@ -8,21 +8,25 @@ const SITE = Deno.env.get('SITE_URL') || 'https://mahmoudyahya111.github.io/AND-
 const admin = createClient(Deno.env.get('SUPABASE_URL')!, Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!, { auth: { persistSession: false } });
 
 async function send(cfg: any, to: string[], subject: string, html: string, text: string) {
-  const su = Deno.env.get('SMTP_USER'), sp = Deno.env.get('SMTP_PASS'), key = Deno.env.get('RESEND_API_KEY');
+  const prov = cfg.provider === 'resend' ? 'resend' : 'gmail';
   const nm = cfg.from_name ? String(cfg.from_name).replace(/[<>"\r\n]/g, '') : 'AND.Furniture';
-  if (su && sp) {
-    // Gmail (or any SMTP over TLS, port 465) with an app password. No domain needed. Sends one message per recipient.
+  if (prov === 'gmail') {
+    // Gmail SMTP (port 465) with an app password kept as Supabase secrets SMTP_USER / SMTP_PASS. No domain needed.
+    const su = Deno.env.get('SMTP_USER'), sp = Deno.env.get('SMTP_PASS');
+    if (!su || !sp) return { ok: false, note: 'Gmail not connected yet (secrets SMTP_USER / SMTP_PASS missing)' };
     try {
       const { SMTPClient } = await import('https://deno.land/x/denomailer@1.6.0/mod.ts');
-      const c = new SMTPClient({ connection: { hostname: Deno.env.get('SMTP_HOST') || 'smtp.gmail.com', port: 465, tls: true, auth: { username: su, password: sp } } });
+      const c = new SMTPClient({ connection: { hostname: 'smtp.gmail.com', port: 465, tls: true, auth: { username: su, password: sp } } });
       try { for (const t of to) await c.send({ from: `${nm} <${su}>`, to: t, subject, content: text, html }); } finally { await c.close(); }
-      return { ok: true, note: 'sent via smtp' };
+      return { ok: true, note: 'sent via gmail' };
     } catch (e) { return { ok: false, note: 'smtp: ' + String(e).slice(0, 200) }; }
   }
-  if (!key) return { ok: false, note: 'no email provider set (SMTP_USER/SMTP_PASS or RESEND_API_KEY)' };
-  if (!cfg.from_email) return { ok: false, note: 'sender address not set' };
+  // Resend with a verified domain: sender address comes from the admin settings, API key from the secret RESEND_API_KEY.
+  const key = Deno.env.get('RESEND_API_KEY');
+  if (!key) return { ok: false, note: 'Resend not connected yet (secret RESEND_API_KEY missing)' };
+  if (!cfg.from_email) return { ok: false, note: 'sender address not set in Settings' };
   const r = await fetch('https://api.resend.com/emails', { method: 'POST', headers: { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json' }, body: JSON.stringify({ from: `${nm} <${cfg.from_email}>`, to, subject, html, text }) });
-  if (!r.ok) return { ok: false, note: `provider ${r.status}: ${(await r.text()).slice(0, 200)}` };
+  if (!r.ok) return { ok: false, note: `resend ${r.status}: ${(await r.text()).slice(0, 200)}` };
   return { ok: true, note: 'sent via resend' };
 }
 function mail(name: string, msg: string, at: Date, id: number | string) {
@@ -43,7 +47,7 @@ Deno.serve(async (req) => {
     if (!u?.user) return reply({ error: 'Not signed in' }, 401);
     const { data: me } = await admin.from('profiles').select('role,email').eq('id', u.user.id).maybeSingle();
     if (!me || me.role !== 'owner') return reply({ error: 'Owner only' }, 403);
-    if (b.action === 'status') return reply({ provider_ready: !!((Deno.env.get('SMTP_USER') && Deno.env.get('SMTP_PASS')) || Deno.env.get('RESEND_API_KEY')), via: Deno.env.get('SMTP_PASS') ? 'smtp' : Deno.env.get('RESEND_API_KEY') ? 'resend' : null });
+    if (b.action === 'status') return reply({ gmail_ready: !!(Deno.env.get('SMTP_USER') && Deno.env.get('SMTP_PASS')), resend_ready: !!Deno.env.get('RESEND_API_KEY'), provider: cfg?.provider || 'gmail' });
     if (b.action === 'test') { const m = mail('Test customer', 'This is a test alert. Real alerts show the first message of the new chat.', new Date(), 'TEST'); const r = await send(cfg || {}, [me.email], '[Test] ' + m.subject, m.html, m.text); return reply(r, r.ok ? 200 : 400); }
     return reply({ error: 'Unknown action' }, 400);
   }

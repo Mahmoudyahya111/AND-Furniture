@@ -83,3 +83,7 @@ Each change is its own commit. Undo one with `git revert <hash>`.
 - Provider: Gmail SMTP (port 465) with an app password, no domain needed (secrets SMTP_USER and SMTP_PASS on the edge function, never in repo or chat); Resend is an optional fallback (RESEND_API_KEY). Verified the function reaches Gmail and only fails on credentials; nothing is sent until real credentials are added.
 - Also: Meta empty-state text now points to Settings (where the Pixel ID lives).
 - Admin tab order: Analytics now sits right after Dashboard (owner/admin) so it is visible without scrolling the tab bar.
+
+## 35. Chat alert settings: provider choice and sender (AND)
+- sql/chat-alerts.sql: chat_alert_cfg.provider ('gmail' default or 'resend', additive). Edge function chat-notify reads provider + sender from the owner's settings on every send, so adding a domain later needs no code change: pick Resend, enter the sender address/name, add the Supabase secret RESEND_API_KEY.
+- Admin > Settings > Email alert panel: on/off, provider, sender address and name, recipients, test email, honest status ("Not connected yet" until the secret exists). The password/API key is never typed in the admin; it lives as a Supabase secret (SMTP_USER/SMTP_PASS or RESEND_API_KEY). Alert stays inactive until connected.

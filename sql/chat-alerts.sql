@@ -36,3 +36,4 @@ revoke all on function public.chat_alert_on_new() from public, anon, authenticat
 
 drop trigger if exists chat_alert_new on public.chats;
 create trigger chat_alert_new after insert on public.chats for each row execute function public.chat_alert_on_new();
+alter table public.chat_alert_cfg add column if not exists provider text not null default 'gmail' check (provider in ('gmail','resend'));
