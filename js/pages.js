@@ -81,6 +81,7 @@
       wrap.innerHTML = '<div class="pdx-facts">' + facts.map(function (f) { return '<span>' + esc(f) + '</span>'; }).join('') + '<button type="button" id="pdshare">' + L('مشاركة', 'Share') + '</button></div>';
       var rel = c.prods.filter(function (x) { return x.id !== p.id && x.category_id === p.category_id && x.active !== false; }).slice(0, 4);
       if (rel.length) wrap.innerHTML += '<h2 class="pdx-h">' + L('منتجات مشابهة', 'You may also like') + '</h2><div class="grid">' + rel.map(AND.productCard).join('') + '</div>';
+      AND.$$('.card', wrap).forEach(function (k) { k.classList.add('rv', 'in'); });
       $('#pd').parentNode.parentNode.appendChild(wrap);
       var bar = document.createElement('div'); bar.className = 'pdx-bar'; bar.innerHTML = '<div><b>' + AND.money(p.price) + '</b><small>' + esc(AND.pick(p, 'name')) + '</small></div><button class="btn gold" id="pdbuy"' + (out ? ' disabled' : '') + '>' + (out ? t('out') : t('add')) + '</button>';
       document.body.appendChild(bar);
