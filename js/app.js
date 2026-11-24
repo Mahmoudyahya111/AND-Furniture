@@ -194,7 +194,7 @@
 /* WhatsApp inquiry log: a click on the product-page "Order on WhatsApp" button records an inquiry (not an order). Fire and forget. */
 document.addEventListener('click', function (e) {
   try {
-    var a = e.target.closest && e.target.closest('a.btn.wa'); if (!a || !window.AND || !AND.sb || !AND.live) return;
+    var a = e.target.closest && e.target.closest('#wabtn'); if (!a || !window.AND || !AND.sb || !AND.live) return;
     var id = new URLSearchParams(location.search).get('id'); if (!id) return;
     var on = document.querySelector('.swatches .on'), qv = document.getElementById('qv');
     AND.sb.rpc('log_whatsapp_inquiry', { p: { id: +id, color: on ? on.getAttribute('data-col') : '', qty: qv ? +qv.textContent : 1, page: location.pathname.split('/').pop() + location.search, utm: (AND.px && AND.px.utm && AND.px.utm()) || null } }).then(function () { }, function () { });
