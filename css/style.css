@@ -72,3 +72,5 @@ footer.foot{background:#3d3128;color:#e6d9c4;margin-top:50px;padding:36px 0 22px
 .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin-bottom:18px}.kpi{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:14px}.kpi b{display:block;font-size:1.5rem;color:var(--taupe)}.kpi span{color:var(--muted);font-size:.85rem}
 
 .hero .art{aspect-ratio:1;height:auto;width:100%}.price s,.price{white-space:nowrap}.cats .panel{text-align:center;display:grid;gap:6px;justify-items:center}.iconbtn svg{display:block}
+
+@media(max-width:560px){.line{flex-wrap:wrap}.line .nm{flex-basis:calc(100% - 92px)}}

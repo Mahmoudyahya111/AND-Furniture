@@ -145,7 +145,7 @@
     function open(id) { cur = cache.chat = id; last = 0; seen = {}; $('#cm').innerHTML = ''; var c = cache.chats.filter(function (x) { return x.id === id; })[0] || {}; $('#ch').innerHTML = '<b>' + esc(c.visitor_name || L('زائر', 'Visitor') + ' #' + id) + '</b><div style="flex:1"></div><button class="btn sm ghost" id="cc">' + (c.status === 'closed' ? L('إعادة فتح', 'Reopen') : L('إغلاق المحادثة', 'Close chat')) + '</button>'; $('#cc').onclick = async function () { await sb.rpc('chat_staff_set', { p_chat: id, p_status: c.status === 'closed' ? 'open' : 'closed' }); await list(); open(id); }; msgs().then(list); }
     $('#cl').onclick = function (e) { var b = e.target.closest('[data-id]'); if (b) open(+b.getAttribute('data-id')); };
     $('#cf').onsubmit = async function (e) { e.preventDefault(); var v = $('#ci').value.trim(); if (!cur || !v) return; $('#ci').value = ''; var r = await sb.rpc('chat_staff_send', { p_chat: cur, p_body: v }); if (r.error) { toast(r.error.message); $('#ci').value = v; return; } msgs(); };
-    await list(); if (cur) open(cur);
+    await list(); if (!cur && cache.chats && cache.chats.length) cur = cache.chats[0].id; if (cur) open(cur);
     timers.push(setInterval(async function () { await list(); await msgs(); }, 3500));
   };
 
