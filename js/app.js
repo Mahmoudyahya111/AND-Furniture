@@ -132,13 +132,13 @@
     $('#hdr').outerHTML = '<header class="top"><div class="wrap bar"><button class="iconbtn burger" aria-label="menu" id="burger">&#9776;</button><a class="brand" href="index.html"><img src="img/logo-96.jpg" alt="AND.Furniture logo" width="44" height="44"><span>' + AND.esc(nm) + '</span></a>' +
       '<nav class="links" id="nav">' + links.map(function (l) { return '<a href="' + l[0] + '"' + (page === l[2] ? ' class="on"' : '') + '>' + t(l[1]) + '</a>'; }).join('') + '</nav><div class="sp"></div>' +
       '<button class="iconbtn" id="langbtn">' + (AND.lang === 'ar' ? 'EN' : 'عربي') + '</button><a class="iconbtn" href="account.html" id="acct">' + t('login') + '</a>' +
-      '<a class="iconbtn" href="cart.html" aria-label="' + t('cart') + '">&#128722;<span class="badge cart-badge" style="display:none">0</span></a></div></header>';
+      '<a class="iconbtn" href="cart.html" aria-label="' + t('cart') + '"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M2 3h3l2.6 12.4a2 2 0 0 0 2 1.6h8a2 2 0 0 0 2-1.5L21 8H6"/></svg><span class="badge cart-badge" style="display:none">0</span></a></div></header>';
     var wa = String(s.whatsapp || '').replace(/\D/g, '');
     $('#ftr').outerHTML = '<footer class="foot"><div class="wrap"><div class="fg"><div><h4>' + AND.esc(nm) + '</h4><p>' + AND.esc(AND.pick(s, 'tagline')) + '</p></div>' +
       '<div><h4>' + t('links') + '</h4><p>' + links.map(function (l) { return '<a href="' + l[0] + '">' + t(l[1]) + '</a>'; }).join('<br>') + '</p></div>' +
       '<div><h4>' + t('contact') + '</h4><p>' + (s.phone ? '<a href="tel:' + AND.esc(s.phone) + '" dir="ltr">' + AND.esc(s.phone) + '</a><br>' : '') + (s.email ? '<a href="mailto:' + AND.esc(s.email) + '">' + AND.esc(s.email) + '</a><br>' : '') +
       (s.facebook ? '<a href="' + AND.esc(s.facebook) + '" target="_blank" rel="noopener">Facebook</a>' : '') + '</p></div></div><div class="fine">&copy; ' + new Date().getFullYear() + ' ' + AND.esc(nm) + '. ' + t('rights') + '.</div></div></footer>' +
-      (wa ? '<a class="wa-fab" target="_blank" rel="noopener" aria-label="WhatsApp" href="https://wa.me/' + wa + '">&#128222;</a>' : '');
+      (wa ? '<a class="wa-fab" target="_blank" rel="noopener" aria-label="WhatsApp" href="https://wa.me/' + wa + '"><svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.2 14c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.2-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.8 0-1.3.7-1.9.9-2.2.2-.2.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.9 2.1c.1.2.1.4 0 .5l-.4.6c-.1.2-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.8-1c.2-.2.4-.2.6-.1l2 .9c.3.1.5.2.5.3.1.2.1.8-.1 1.4z"/></svg></a>' : '');
     $('#burger').onclick = function () { $('#nav').classList.toggle('open'); };
     $('#langbtn').onclick = function () { AND.setLang(AND.lang === 'ar' ? 'en' : 'ar'); };
     AND.cartBadge(); AND.chatInit();
@@ -147,7 +147,7 @@
 
   /* ---------- customer chat widget (polls; guests identified by a random token) ---------- */
   AND.chatInit = function () {
-    var fab = document.createElement('button'); fab.className = 'chat-fab'; fab.setAttribute('aria-label', t('chatT')); fab.innerHTML = '&#128172;';
+    var fab = document.createElement('button'); fab.className = 'chat-fab'; fab.setAttribute('aria-label', t('chatT')); fab.innerHTML = '<svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg>';
     var box = document.createElement('div'); box.className = 'chat-box';
     box.innerHTML = '<header><span>' + t('chatT') + '</span><button aria-label="close">&times;</button></header><div class="msgs"></div><form class="chat-in"><input maxlength="2000" placeholder="' + t('chatPh') + '" aria-label="' + t('chatPh') + '"><button class="btn sm gold">' + t('send') + '</button></form>';
     document.body.appendChild(box); document.body.appendChild(fab);

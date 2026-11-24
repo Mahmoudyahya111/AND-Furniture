@@ -3,6 +3,7 @@
   'use strict';
   var AND = window.AND, $ = AND.$, t = AND.t, esc = AND.esc, P = document.body.getAttribute('data-page');
   var pages = {};
+  var ICONS = ['<svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="#9b7a35" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 6h13v11H1zM14 10h5l4 4v3h-9"/><circle cx="6" cy="18" r="2"/><circle cx="18" cy="18" r="2"/></svg>', '<svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="#9b7a35" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="3"/></svg>', '<svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="#9b7a35" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22V8M12 8C12 4 9 2 5 2c0 4 2 6 7 6zM12 12c0-3 2-5 6-5 0 3-2 5-6 5z"/></svg>', '<svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="#9b7a35" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1v-6h3zM3 19a2 2 0 0 0 2 2h1v-6H3z"/></svg>'];
 
   pages.home = async function () {
     var c = await AND.catalog(), s = AND.settings.store;
@@ -10,7 +11,7 @@
     $('#cats').innerHTML = c.cats.map(function (k) { return '<a class="cat" href="shop.html?cat=' + esc(k.slug) + '">' + esc(AND.pick(k, 'name')) + '</a>'; }).join('');
     var f = c.prods.filter(function (p) { return p.featured; }); if (!f.length) f = c.prods;
     $('#feat').innerHTML = f.slice(0, 8).map(AND.productCard).join('');
-    $('#why').innerHTML = ['why1', 'why2', 'why3', 'why4'].map(function (k, i) { return '<div class="panel"><div style="font-size:1.6rem">' + ['🚚', '💵', '🪵', '💬'][i] + '</div><b>' + t(k) + '</b></div>'; }).join('');
+    $('#why').innerHTML = ['why1', 'why2', 'why3', 'why4'].map(function (k, i) { return '<div class="panel"><div style="font-size:1.6rem">' + ICONS[i] + '</div><b>' + t(k) + '</b></div>'; }).join('');
   };
 
   pages.shop = async function () {
@@ -77,7 +78,7 @@
         var r = await AND.sb.rpc('place_order', { p: { customer_name: f.n.value, phone: f.p.value, email: f.e.value, governorate: f.g.value, address: f.a.value, notes: f.o.value, payment_method: f.pm.value || 'cod', items: lines().map(function (l) { return { id: l.id, qty: l.qty, color: l.color }; }) } });
         if (r.error) { er.innerHTML = '<div class="note err">' + esc(/stock|unavailable/i.test(r.error.message) ? r.error.message : t('err')) + '</div>'; b.disabled = false; b.textContent = t('place'); return; }
         localStorage.setItem('and_name', f.n.value); AND.cart.clear();
-        box.innerHTML = '<div class="panel" style="text-align:center;max-width:560px;margin:auto"><div style="font-size:3rem">✅</div><h2>' + t('thanks') + '</h2><p>' + t('ordno') + ': <b dir="ltr">' + esc(r.data.number) + '</b></p><p>' + AND.money(r.data.total) + '</p><p class="note">' + t('savenum') + '</p><a class="btn" href="track.html?n=' + encodeURIComponent(r.data.number) + '&p=' + encodeURIComponent(f.p.value) + '">' + t('trackbtn') + '</a></div>';
+        box.innerHTML = '<div class="panel" style="text-align:center;max-width:560px;margin:auto"><div style="font-size:3rem;color:var(--ok)">&#10003;</div><h2>' + t('thanks') + '</h2><p>' + t('ordno') + ': <b dir="ltr">' + esc(r.data.number) + '</b></p><p>' + AND.money(r.data.total) + '</p><p class="note">' + t('savenum') + '</p><a class="btn" href="track.html?n=' + encodeURIComponent(r.data.number) + '&p=' + encodeURIComponent(f.p.value) + '">' + t('trackbtn') + '</a></div>';
         window.scrollTo(0, 0);
       };
     }
@@ -110,7 +111,7 @@
     $('#cinfo').innerHTML = '<div class="panel"><h3>' + t('visit') + '</h3><p>' + (addr ? esc(addr) : '<span style="color:var(--muted)">' + t('soon') + '</span>') + '</p>' + (s.map_url ? '<a class="btn ghost sm" target="_blank" rel="noopener" href="' + esc(s.map_url) + '">Google Maps</a>' : '') + '<h3 style="margin-top:18px">' + t('phone') + '</h3><p><a dir="ltr" href="tel:' + esc(s.phone) + '">' + esc(s.phone) + '</a></p><a class="btn wa" target="_blank" rel="noopener" href="' + esc(AND.waLink(t('whapp'))) + '">' + t('wa') + '</a></div>' +
       '<div class="panel"><h3>' + t('hours') + '</h3>' + (any ? '<table class="hours">' + days.map(function (d) { return '<tr><td>' + t('d_' + d) + '</td><td dir="ltr" style="text-align:end">' + (h[d] ? esc(h[d]) : t('closed')) + '</td></tr>'; }).join('') + '</table>' + (AND.pick(h, 'note') ? '<p class="note" style="margin-top:10px">' + esc(AND.pick(h, 'note')) + '</p>' : '') : '<p style="color:var(--muted)">' + t('soon') + '</p>') + '</div>';
   };
-  pages.about = async function () { $('#ab').innerHTML = '<p>' + t('aboutP1') + '</p><p>' + t('aboutP2') + '</p><p>' + t('aboutP3') + '</p>'; $('#why').innerHTML = ['why1', 'why2', 'why3', 'why4'].map(function (k, i) { return '<div class="panel"><div style="font-size:1.6rem">' + ['🚚', '💵', '🪵', '💬'][i] + '</div><b>' + t(k) + '</b></div>'; }).join(''); };
+  pages.about = async function () { $('#ab').innerHTML = '<p>' + t('aboutP1') + '</p><p>' + t('aboutP2') + '</p><p>' + t('aboutP3') + '</p>'; $('#why').innerHTML = ['why1', 'why2', 'why3', 'why4'].map(function (k, i) { return '<div class="panel"><div style="font-size:1.6rem">' + ICONS[i] + '</div><b>' + t(k) + '</b></div>'; }).join(''); };
 
   pages.account = async function () {
     var box = $('#acbox'); if (!AND.live) { box.innerHTML = '<div class="note err">' + t('demo') + '</div>'; return; }
