@@ -40,3 +40,8 @@ Each change is its own commit. Undo one with `git revert <hash>`.
 - New css/premium.css, js/home.js (premium home: sliding parallax hero with designed room scenes, trust strip, shop-by-room tiles, animated counters, story, how-it-works, sample testimonials, CTA band), js/theme.js (dark/light toggle, saved, defaults to system, no-flash inline snippet in every page head).
 - Real photos: edit the IMG object at the top of js/home.js. Old home: git tag old-look-before-redesign.
 - pages.js: home no longer renders #cats / h-cats (home.js owns them).
+
+## 27. Header, mobile menu, theme fixes, floating chat fix
+- Mobile header: logo + AND.Furniture wordmark + cart + menu; account, language and dark/light moved into the hamburger menu. Header background uses logo tones (light cream/gold, dark espresso/gold).
+- BUG FIX: premium.css redefined @keyframes pgin (with a transform), which modern.css applies to body, so body kept a transform and anchored position:fixed chat/WhatsApp buttons to the page bottom. Renamed to mainin.
+- Home: testimonials removed; stats and trust strip use neutral/settings-driven values (no hardcoded delivery/support claims).
