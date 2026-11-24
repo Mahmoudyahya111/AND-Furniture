@@ -11,8 +11,8 @@ begin
 end $f$;
 create table if not exists public.blocked_contacts(id bigserial primary key, kind text not null check (kind in ('email','phone')), value text not null, note text, created_at timestamptz not null default now(), created_by uuid default auth.uid(), unique (kind, value));
 alter table public.blocked_contacts enable row level security;
-drop policy if exists blocked_owner_admin on public.blocked_contacts;
-create policy blocked_owner_admin on public.blocked_contacts for all to authenticated using (my_role() in ('owner','admin')) with check (my_role() in ('owner','admin'));
+drop policy if exists blocked_owner on public.blocked_contacts;
+create policy blocked_owner on public.blocked_contacts for all to authenticated using (coalesce(is_owner(),false)) with check (coalesce(is_owner(),false));
 revoke all on public.blocked_contacts from anon; grant select, insert, update, delete on public.blocked_contacts to authenticated;
 grant usage, select on sequence public.blocked_contacts_id_seq to authenticated;
 -- normalize on write so matching is exact

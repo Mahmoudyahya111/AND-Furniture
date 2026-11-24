@@ -89,7 +89,7 @@
 
   /* ---------- customer lookup + block list (staff; block = owner/admin) ---------- */
   V.cust = async function () {
-    var canBlock = role === 'owner' || role === 'admin', last = null;
+    var canBlock = role === 'owner', last = null;
     var norm = function (q) { return q.indexOf('@') > -1 ? { kind: 'email', value: q.trim().toLowerCase() } : { kind: 'phone', value: q }; };
     $('#view').innerHTML = '<div class="panel f"><h3>' + L('بحث عن عميل', 'Customer lookup') + '</h3><p class="help">' + L('اكتب البريد الإلكتروني أو رقم الموبايل لترى كل طلبات هذا العميل. الأرقام المصرية تُطابق بأي صيغة (010 أو +20 أو 0020).', 'Enter an email or a phone number to see all orders from that customer. Egyptian numbers match in any format (010, +20 or 0020).') + '</p><form id="clf" class="rowf"><input id="clq" dir="ltr" placeholder="name@mail.com / 010xxxxxxxx" required><button class="btn gold sm">' + L('بحث', 'Search') + '</button></form></div><div id="clr"></div>' + (canBlock ? '<div class="panel f" style="margin-top:18px"><h3>' + L('العملاء المحظورون', 'Blocked customers') + '</h3><p class="help">' + L('لا يستطيع العميل المحظور إتمام طلب جديد (يُمنع في قاعدة البيانات نفسها). يظهر له رسالة عامة فقط.', 'A blocked customer cannot place a new order (enforced in the database). They only see a general message.') + '</p><div id="blist">…</div></div>' : '');
     var statusT = function (s) { return (typeof ST !== 'undefined' && ST[s]) || s; };
