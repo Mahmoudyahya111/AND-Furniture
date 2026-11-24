@@ -8,7 +8,6 @@
   pages.home = async function () {
     var c = await AND.catalog(), s = AND.settings.store;
     $('#hero-t').textContent = AND.pick(s, 'tagline'); $('#hero-sub').textContent = AND.lang === 'ar' ? 'Furnish your home with style' : s.tagline_en || 'Furnish your home with style';
-    $('#cats').innerHTML = c.cats.map(function (k) { return '<a class="cat" href="shop.html?cat=' + esc(k.slug) + '">' + esc(AND.pick(k, 'name')) + '</a>'; }).join('');
     var f = c.prods.filter(function (p) { return p.featured; }); if (!f.length) f = c.prods;
     $('#feat').innerHTML = f.slice(0, 8).map(AND.productCard).join('');
     $('#why').innerHTML = ['why1', 'why2', 'why3', 'why4'].map(function (k, i) { return '<div class="panel"><div style="font-size:1.6rem">' + ICONS[i] + '</div><b>' + t(k) + '</b></div>'; }).join('');
@@ -175,7 +174,7 @@
   var AND = window.AND, t = AND.t, set = function (id, v) { var e = document.getElementById(id); if (e) e.textContent = v; };
   document.addEventListener('DOMContentLoaded', function () {});
   var iv = setInterval(function () { if (!document.getElementById('burger')) return; clearInterval(iv);
-    set('c1', t('shopnow')); set('c2', t('chatus')); set('h-cats', t('browse')); set('h-feat', t('featured')); set('va', t('viewall'));
+    set('c1', t('shopnow')); set('c2', t('chatus')); set('h-feat', t('featured')); set('va', t('viewall'));
     set('th', t('track')); set('tl1', t('tnum')); set('tl2', t('tphone')); set('tb', t('tfind')); set('ch', t('contact')); set('ah', t('aboutT'));
     var x = document.querySelector('[data-x]'); if (x) x.textContent = AND.lang === 'ar' ? 'أثاث منزلي بخامات مختارة وتوصيل لكل المحافظات والدفع عند الاستلام.' : 'Home furniture in carefully chosen materials, delivered across Egypt, with cash on delivery.';
     var c2 = document.getElementById('c2'); if (c2) c2.onclick = function (e) { e.preventDefault(); document.querySelector('.chat-fab').click(); };

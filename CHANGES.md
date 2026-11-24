@@ -35,3 +35,8 @@ Each change is its own commit. Undo one with `git revert <hash>`.
 - UTM/fbclid captured on landing (30 days, localStorage) and saved on the order in new nullable column `orders.attribution` (additive). `place_order` updated to store it; previous definition backed up in backups/place_order-before-attribution.sql.
 - Admin: Pixel card (validate, save, remove, status check, Test Events steps, consent note, UTM link builder); order detail shows campaign source.
 - Revert: git revert this commit; column can stay (unused).
+
+## 26. Premium redesign step 2 + dark/light themes
+- New css/premium.css, js/home.js (premium home: sliding parallax hero with designed room scenes, trust strip, shop-by-room tiles, animated counters, story, how-it-works, sample testimonials, CTA band), js/theme.js (dark/light toggle, saved, defaults to system, no-flash inline snippet in every page head).
+- Real photos: edit the IMG object at the top of js/home.js. Old home: git tag old-look-before-redesign.
+- pages.js: home no longer renders #cats / h-cats (home.js owns them).
