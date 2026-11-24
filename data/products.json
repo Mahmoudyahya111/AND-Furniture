@@ -1,0 +1,414 @@
+{
+ "categories": [
+  {
+   "slug": "living",
+   "name_ar": "غرف المعيشة والركنات",
+   "name_en": "Living Room & Corners",
+   "sort": 1
+  },
+  {
+   "slug": "bedrooms",
+   "name_ar": "غرف النوم",
+   "name_en": "Bedrooms",
+   "sort": 2
+  },
+  {
+   "slug": "dining",
+   "name_ar": "السفرة",
+   "name_en": "Dining",
+   "sort": 3
+  },
+  {
+   "slug": "wardrobes",
+   "name_ar": "الدواليب",
+   "name_en": "Wardrobes",
+   "sort": 4
+  },
+  {
+   "slug": "tables",
+   "name_ar": "ترابيزات وتي في يونيت",
+   "name_en": "Tables & TV Units",
+   "sort": 5
+  },
+  {
+   "slug": "kids",
+   "name_ar": "غرف الأطفال والشباب",
+   "name_en": "Kids & Youth",
+   "sort": 6
+  },
+  {
+   "slug": "office",
+   "name_ar": "المكاتب",
+   "name_en": "Home Office",
+   "sort": 7
+  }
+ ],
+ "products": [
+  {
+   "slug": "corner-sofa-l",
+   "cat": "living",
+   "kind": "corner",
+   "color": "#a8957f",
+   "name_ar": "ركنة مودرن شكل L",
+   "name_en": "Modern L-Shaped Corner Sofa",
+   "desc_ar": "ركنة مريحة بشكل L تتسع من 5 إلى 6 أفراد، هيكل خشب زان وإسفنج عالي الكثافة وقماش مقاوم للبقع.",
+   "desc_en": "Comfortable L-shaped corner sofa seating 5 to 6. Beech wood frame, high-density foam and stain-resistant fabric.",
+   "price": 38500,
+   "compare_at": 43000,
+   "stock": 6,
+   "dimensions": "300 x 210 x 85 cm",
+   "material_ar": "خشب زان وقماش مقاوم للبقع",
+   "material_en": "Beech wood, stain-resistant fabric",
+   "colors": [
+    "رمادي",
+    "بيج",
+    "بني"
+   ],
+   "featured": true,
+   "images": [
+    "img/ph/corner-sofa-l.svg"
+   ]
+  },
+  {
+   "slug": "sofa-3seat",
+   "name_ar": "كنبة 3 مقاعد كلاسيك",
+   "name_en": "Classic 3-Seater Sofa",
+   "kind": "sofa",
+   "cat": "living",
+   "color": "#7d6a58",
+   "desc_ar": "كنبة ثلاثية بتصميم كلاسيكي وظهر مبطن، مناسبة لغرف الريسبشن والمعيشة.",
+   "desc_en": "Classic three-seater with a padded back, suited to reception and living rooms.",
+   "price": 16900,
+   "stock": 9,
+   "dimensions": "210 x 90 x 85 cm",
+   "material_ar": "خشب زان وقماش مخمل",
+   "material_en": "Beech wood, velvet fabric",
+   "colors": [
+    "بيج",
+    "أخضر زيتي",
+    "بني"
+   ],
+   "featured": true,
+   "images": [
+    "img/ph/sofa-3seat.svg"
+   ]
+  },
+  {
+   "slug": "armchair-velvet",
+   "name_ar": "فوتيه مخمل",
+   "name_en": "Velvet Armchair",
+   "kind": "armchair",
+   "cat": "living",
+   "color": "#b5733a",
+   "desc_ar": "فوتيه مخمل بأرجل معدن ذهبي، يضيف لمسة أنيقة لأي ركن.",
+   "desc_en": "Velvet armchair with gold metal legs, a stylish touch for any corner.",
+   "price": 5200,
+   "stock": 14,
+   "dimensions": "75 x 80 x 82 cm",
+   "material_ar": "مخمل وأرجل معدن",
+   "material_en": "Velvet, metal legs",
+   "colors": [
+    "نحاسي",
+    "بيج",
+    "أخضر"
+   ],
+   "images": [
+    "img/ph/armchair-velvet.svg"
+   ]
+  },
+  {
+   "slug": "bedroom-master-6",
+   "name_ar": "غرفة نوم ماستر 6 قطع",
+   "name_en": "Master Bedroom Set, 6 Pieces",
+   "kind": "bed",
+   "cat": "bedrooms",
+   "color": "#8b7765",
+   "desc_ar": "غرفة نوم كاملة: سرير 180 سم، دولاب 6 ضلف، تسريحة بمرآة، كومودينوهين وشلتة.",
+   "desc_en": "Complete set: 180 cm bed, 6-door wardrobe, dresser with mirror, two nightstands and a bench.",
+   "price": 62000,
+   "compare_at": 68000,
+   "stock": 4,
+   "dimensions": "سرير 180 x 200 سم",
+   "material_ar": "خشب mdf مستورد وأوية",
+   "material_en": "Imported MDF with veneer finish",
+   "colors": [
+    "بيج",
+    "جوزي",
+    "أبيض"
+   ],
+   "featured": true,
+   "images": [
+    "img/ph/bedroom-master-6.svg"
+   ]
+  },
+  {
+   "slug": "bed-upholstered",
+   "name_ar": "سرير منجد بمخدة رأس",
+   "name_en": "Upholstered Bed with Headboard",
+   "kind": "bed",
+   "cat": "bedrooms",
+   "color": "#9c8a78",
+   "desc_ar": "سرير منجد بتصميم عصري ومخدة رأس مبطنة، مقاس 160 أو 180 سم.",
+   "desc_en": "Modern upholstered bed with a padded headboard, in 160 or 180 cm.",
+   "price": 14500,
+   "stock": 8,
+   "dimensions": "160 x 200 سم أو 180 x 200 سم",
+   "material_ar": "خشب زان وقماش كتان",
+   "material_en": "Beech wood, linen fabric",
+   "colors": [
+    "رمادي",
+    "بيج"
+   ],
+   "featured": true,
+   "images": [
+    "img/ph/bed-upholstered.svg"
+   ]
+  },
+  {
+   "slug": "nightstand-pair",
+   "name_ar": "كومودينو (زوج)",
+   "name_en": "Nightstands (Pair)",
+   "kind": "nightstand",
+   "cat": "bedrooms",
+   "color": "#7d6a58",
+   "desc_ar": "زوج كومودينو بدرجين وأرجل خشب، يناسب معظم أسرّة الغرف.",
+   "desc_en": "Pair of two-drawer nightstands with wooden legs.",
+   "price": 4800,
+   "stock": 12,
+   "dimensions": "45 x 40 x 50 cm",
+   "material_ar": "خشب mdf",
+   "material_en": "MDF",
+   "colors": [
+    "جوزي",
+    "أبيض"
+   ],
+   "images": [
+    "img/ph/nightstand-pair.svg"
+   ]
+  },
+  {
+   "slug": "dining-6",
+   "name_ar": "سفرة 6 كراسي رخام",
+   "name_en": "6-Chair Dining Set, Marble Top",
+   "kind": "dining",
+   "cat": "dining",
+   "color": "#a89886",
+   "desc_ar": "ترابيزة سفرة بسطح رخام صناعي مع 6 كراسي مبطنة.",
+   "desc_en": "Dining table with a marble-look top and six upholstered chairs.",
+   "price": 27500,
+   "compare_at": 30000,
+   "stock": 5,
+   "dimensions": "ترابيزة 180 x 90 سم",
+   "material_ar": "سطح رخام وهيكل معدن",
+   "material_en": "Marble-look top, metal frame",
+   "colors": [
+    "رخام أبيض",
+    "رخام رمادي"
+   ],
+   "featured": true,
+   "images": [
+    "img/ph/dining-6.svg"
+   ]
+  },
+  {
+   "slug": "dining-4-round",
+   "name_ar": "سفرة مستديرة 4 كراسي",
+   "name_en": "Round Dining Set, 4 Chairs",
+   "kind": "dining",
+   "cat": "dining",
+   "color": "#8b7765",
+   "desc_ar": "ترابيزة مستديرة مع 4 كراسي، مناسبة للمساحات المتوسطة.",
+   "desc_en": "Round dining table with four chairs, ideal for medium spaces.",
+   "price": 13900,
+   "stock": 7,
+   "dimensions": "قطر 110 سم",
+   "material_ar": "خشب زان",
+   "material_en": "Beech wood",
+   "colors": [
+    "طبيعي",
+    "أسود"
+   ],
+   "images": [
+    "img/ph/dining-4-round.svg"
+   ]
+  },
+  {
+   "slug": "wardrobe-sliding",
+   "name_ar": "دولاب سحاب 3 متر",
+   "name_en": "3 m Sliding-Door Wardrobe",
+   "kind": "wardrobe",
+   "cat": "wardrobes",
+   "color": "#9c8a78",
+   "desc_ar": "دولاب بأبواب سحاب ومرايا، مقسم من الداخل بأرفف وشماعات.",
+   "desc_en": "Sliding-door wardrobe with mirrors and fitted shelves and hanging rails.",
+   "price": 24500,
+   "stock": 5,
+   "dimensions": "300 x 60 x 240 cm",
+   "material_ar": "خشب mdf",
+   "material_en": "MDF",
+   "colors": [
+    "بيج",
+    "رمادي"
+   ],
+   "featured": false,
+   "images": [
+    "img/ph/wardrobe-sliding.svg"
+   ]
+  },
+  {
+   "slug": "wardrobe-6door",
+   "name_ar": "دولاب 6 ضلف",
+   "name_en": "6-Door Wardrobe",
+   "kind": "wardrobe",
+   "cat": "wardrobes",
+   "color": "#7d6a58",
+   "desc_ar": "دولاب كلاسيك بست ضلف ودروج داخلية.",
+   "desc_en": "Classic six-door wardrobe with internal drawers.",
+   "price": 19800,
+   "stock": 6,
+   "dimensions": "240 x 60 x 230 cm",
+   "material_ar": "خشب mdf",
+   "material_en": "MDF",
+   "colors": [
+    "جوزي",
+    "أبيض"
+   ],
+   "images": [
+    "img/ph/wardrobe-6door.svg"
+   ]
+  },
+  {
+   "slug": "tv-unit-wall",
+   "name_ar": "وحدة تلفزيون حائط",
+   "name_en": "Wall TV Unit",
+   "kind": "tvunit",
+   "cat": "tables",
+   "color": "#6b5a4c",
+   "desc_ar": "وحدة تلفزيون بإضاءة LED وتخزين مخفي، تناسب شاشات حتى 75 بوصة.",
+   "desc_en": "TV unit with LED lighting and hidden storage, fits screens up to 75 inches.",
+   "price": 11500,
+   "stock": 8,
+   "dimensions": "220 x 40 x 180 cm",
+   "material_ar": "خشب mdf",
+   "material_en": "MDF",
+   "colors": [
+    "جوزي",
+    "رمادي"
+   ],
+   "featured": true,
+   "images": [
+    "img/ph/tv-unit-wall.svg"
+   ]
+  },
+  {
+   "slug": "coffee-table-set",
+   "name_ar": "طقم ترابيزات قهوة",
+   "name_en": "Coffee Table Set",
+   "kind": "coffee",
+   "cat": "tables",
+   "color": "#c9a45c",
+   "desc_ar": "طقم ترابيزتين قهوة بسطح رخام وأرجل ذهبية.",
+   "desc_en": "Set of two coffee tables with marble-look tops and gold legs.",
+   "price": 6900,
+   "stock": 10,
+   "dimensions": "90 x 60 و 50 x 50 سم",
+   "material_ar": "رخام صناعي ومعدن",
+   "material_en": "Marble-look top, metal",
+   "colors": [
+    "ذهبي",
+    "أسود"
+   ],
+   "images": [
+    "img/ph/coffee-table-set.svg"
+   ]
+  },
+  {
+   "slug": "kids-bunk",
+   "name_ar": "سرير أطفال دورين",
+   "name_en": "Kids Bunk Bed",
+   "kind": "bunk",
+   "cat": "kids",
+   "color": "#a8957f",
+   "desc_ar": "سرير دورين بسلم وحواجز أمان، للأطفال من 6 سنوات.",
+   "desc_en": "Bunk bed with ladder and safety rails, for ages 6 and up.",
+   "price": 12900,
+   "stock": 6,
+   "dimensions": "200 x 100 x 170 cm",
+   "material_ar": "خشب زان",
+   "material_en": "Beech wood",
+   "colors": [
+    "طبيعي",
+    "أبيض"
+   ],
+   "images": [
+    "img/ph/kids-bunk.svg"
+   ]
+  },
+  {
+   "slug": "youth-room",
+   "name_ar": "غرفة شباب 5 قطع",
+   "name_en": "Youth Room Set, 5 Pieces",
+   "kind": "bed",
+   "cat": "kids",
+   "color": "#8b7765",
+   "desc_ar": "سرير 120 سم، دولاب، مكتب، كومودينو ورف كتب.",
+   "desc_en": "120 cm bed, wardrobe, desk, nightstand and bookshelf.",
+   "price": 31500,
+   "stock": 4,
+   "dimensions": "سرير 120 x 200 سم",
+   "material_ar": "خشب mdf",
+   "material_en": "MDF",
+   "colors": [
+    "رمادي وأخضر",
+    "جوزي"
+   ],
+   "images": [
+    "img/ph/youth-room.svg"
+   ]
+  },
+  {
+   "slug": "desk-home",
+   "name_ar": "مكتب منزلي مع مكتبة",
+   "name_en": "Home Desk with Bookcase",
+   "kind": "desk",
+   "cat": "office",
+   "color": "#7d6a58",
+   "desc_ar": "مكتب 140 سم مع رفوف جانبية ودرج، مناسب للعمل من المنزل.",
+   "desc_en": "140 cm desk with side shelves and a drawer for working from home.",
+   "price": 8900,
+   "stock": 9,
+   "dimensions": "140 x 60 x 150 cm",
+   "material_ar": "خشب mdf",
+   "material_en": "MDF",
+   "colors": [
+    "جوزي",
+    "بيج"
+   ],
+   "images": [
+    "img/ph/desk-home.svg"
+   ]
+  },
+  {
+   "slug": "office-chair",
+   "name_ar": "كرسي مكتب مريح",
+   "name_en": "Ergonomic Office Chair",
+   "kind": "chair",
+   "cat": "office",
+   "color": "#6b5a4c",
+   "desc_ar": "كرسي مكتب بظهر شبك ومساند ذراع وقابل لتعديل الارتفاع.",
+   "desc_en": "Mesh-back office chair with armrests and height adjustment.",
+   "price": 3900,
+   "stock": 20,
+   "dimensions": "60 x 60 x 105-115 cm",
+   "material_ar": "شبك وقاعدة معدن",
+   "material_en": "Mesh, metal base",
+   "colors": [
+    "أسود",
+    "رمادي"
+   ],
+   "images": [
+    "img/ph/office-chair.svg"
+   ]
+  }
+ ]
+}
