@@ -114,3 +114,13 @@ html[data-theme=dark] body.adm span.st.confirmed,html[data-theme=dark] body.adm 
 html[data-theme=dark] body.adm span.st.out_for_delivery{background:#e5dcf7;color:#4d2f8a}
 html[data-theme=dark] body.adm span.st.delivered,html[data-theme=dark] body.adm span.st.paid{background:#d8f0e0;color:#1f5d39}
 html[data-theme=dark] body.adm span.st.cancelled,html[data-theme=dark] body.adm span.st.refunded{background:#f6d9d6;color:#8a2a22}
+
+/* chat survey (storefront widget) */
+.chat-sv{margin:10px 0;padding:12px;border:1px solid var(--line,#e6dccb);border-radius:14px;background:var(--card,#fff);display:grid;gap:8px;font-size:14px}
+.chat-sv .st{display:flex;gap:4px;direction:ltr;justify-content:center}
+.chat-sv .st button{background:none;border:0;font-size:28px;line-height:1;color:#cfc4b2;cursor:pointer;padding:2px 4px;min-height:40px;min-width:40px}
+.chat-sv .st button.on{color:#c9a45c}
+.chat-sv .rs{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.chat-sv .rs button{border:1px solid var(--line,#e6dccb);background:none;color:inherit;border-radius:99px;padding:6px 16px;cursor:pointer;min-height:36px}
+.chat-sv .rs button.on{background:#c9a45c;border-color:#c9a45c;color:#1b130d}
+.chat-sv input{padding:9px 11px;border:1px solid var(--line,#e6dccb);border-radius:10px;background:transparent;color:inherit;font:inherit}
