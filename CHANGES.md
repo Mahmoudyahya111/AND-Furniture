@@ -75,3 +75,10 @@ Each change is its own commit. Undo one with `git revert <hash>`.
 - js/track.js on the storefront pages: first-party, no cookies, no names or IPs, random per-tab session id, UTM/fbclid kept for the whole visit, seconds on page. Writes only to this store's own Supabase project (js/config.js). Skips bots, Do-Not-Track.
 - Admin > Analytics (owner/admin): visitors, page views, pages per visit, time on page, daily chart, traffic sources, top pages, devices. "Meta ads visitors per page" plus campaign table show only when a Pixel ID is saved AND ad-sourced visits exist; otherwise "No data yet. Add your Pixel ID in Marketing and run ads with UTM links".
 - Honest limits shown in the page: in-app browsers and ad blockers undercount; campaign detail needs UTM-tagged links.
+
+## 34. Email alert for new chats (AND)
+- DB additive (sql/chat-alerts.sql): pg_net extension, private table chat_alert_cfg (owner only; on/off, all-or-selected recipients, sender), chats.alerted_at, chat_alert_log (owner read), AFTER INSERT trigger on chats that calls the edge function when alerts are on. No existing function was changed.
+- Edge function chat-notify (supabase/functions/chat-notify/index.ts, verify_jwt off, auth handled inside): new-chat call is claimed atomically via chats.alerted_at, so one email per chat even if called twice; emails only profiles with role owner or support (never customers); content: customer name, first message, Cairo time, link to chat-admin.html. Owner-only actions: status, test email.
+- Admin > Settings > "Email alert for new chats": on/off, sender, recipients (all owners+support or selected people), test email, provider status.
+- Provider: Resend. API key is an edge function secret (RESEND_API_KEY), never in the repo or chat. Until it is set the feature logs "RESEND_API_KEY not set" and sends nothing.
+- Also: Meta empty-state text now points to Settings (where the Pixel ID lives).
