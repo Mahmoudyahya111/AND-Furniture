@@ -119,7 +119,7 @@
   }
   function csv(name, rows) { var s = '\ufeff' + rows.map(function (r) { return r.map(function (c) { c = String(c == null ? '' : c); return /[",\n]/.test(c) ? '"' + c.replace(/"/g, '""') + '"' : c; }).join(','); }).join('\r\n'); var a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([s], { type: 'text/csv;charset=utf-8' })); a.download = name; document.body.appendChild(a); a.click(); a.remove(); }
 
-  function labelTables() { document.querySelectorAll('table.tbl').forEach(function (tb) { var hs = [].map.call(tb.rows[0] ? tb.rows[0].cells : [], function (c) { return c.textContent.trim(); }); [].forEach.call(tb.rows, function (r, i) { if (i === 0) return; [].forEach.call(r.cells, function (c, k) { if (!c.hasAttribute('data-l') && hs[k]) c.setAttribute('data-l', hs[k]); }); }); }); }
+  function labelTables() { document.querySelectorAll('table.tbl').forEach(function (tb) { if (!tb.querySelector('th')) { tb.classList.add('plain'); return; } var hs = [].map.call(tb.rows[0] ? tb.rows[0].cells : [], function (c) { return c.textContent.trim(); }); [].forEach.call(tb.rows, function (r, i) { if (i === 0) return; [].forEach.call(r.cells, function (c, k) { if (!c.hasAttribute('data-l') && hs[k]) c.setAttribute('data-l', hs[k]); }); }); }); }
   new MutationObserver(function () { labelTables(); }).observe(document.body, { childList: true, subtree: true });
   /* ---------- products ---------- */
   function stockBadge(x) { var th = x.low_stock_threshold == null ? 3 : x.low_stock_threshold; return x.stock <= 0 ? '<span class="st cancelled">' + L('نفد', 'Out') + '</span>' : x.stock <= th ? '<span class="st new">' + L('منخفض', 'Low') + '</span>' : '<span class="st delivered">' + L('متوفر', 'OK') + '</span>'; }

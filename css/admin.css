@@ -42,3 +42,4 @@ fieldset{border:1px solid var(--line);border-radius:12px;padding:12px 14px 14px;
 .presets{display:inline-flex;gap:6px;flex-wrap:wrap}.mbar{height:6px;background:#eee4d2;border-radius:4px;margin-bottom:3px;min-width:50px}.mbar i{display:block;height:100%;background:var(--gold);border-radius:4px}
 .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin-bottom:14px}
 @media(max-width:700px){.kpis{grid-template-columns:1fr 1fr}.presets{width:100%}.presets .btn{flex:1}}
+@media(max-width:700px){.tbl.plain{display:table;background:#fff;border:1px solid var(--line)}.tbl.plain tbody{display:table-row-group}.tbl.plain tr{display:table-row;border:0;margin:0;padding:0;border-radius:0}.tbl.plain td{display:table-cell;border-bottom:1px solid var(--line);padding:8px;text-align:start}.tbl.plain td>*{max-width:none}}
