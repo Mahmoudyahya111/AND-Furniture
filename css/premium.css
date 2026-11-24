@@ -94,3 +94,15 @@ html[data-theme=dark] .swatches button,html[data-theme=dark] .qty,html[data-them
 html[data-theme=dark] .swatches button.on{background:var(--gold);color:#241a10;border-color:var(--gold)}
 html[data-theme=dark] .panel .line,html[data-theme=dark] .spec>div{border-color:var(--line)}
 html[data-theme=dark] .empty,html[data-theme=dark] .muted{color:var(--muted)}
+/* ---- admin dark: every white surface becomes a dark card ---- */
+html[data-theme=dark] body.adm :is(div,section,details,summary,article,form,fieldset,table,tbody,tr,td,th,li,ul,ol):not(.modal):not(.toast):not(.adm-top):not(.wrap):not(.bar):not(.tabs):not(.rowf):not(.row):not(.stickyb):not(.mh){background-color:var(--card)}
+html[data-theme=dark] body.adm .modal{background:rgba(0,0,0,.65)}
+html[data-theme=dark] body.adm :is(.tabs,.wrap,.row,.rowf,.adm-top .wrap){background:transparent}
+html[data-theme=dark] body.adm :is(div,section,details,form,fieldset,tr,td,li,p,span,b,label,h1,h2,h3,h4,summary,th,small,i,em){color:var(--ink)}
+html[data-theme=dark] body.adm :is(.help,.muted,small,.tbl td[data-l]::before,label){color:var(--muted)}
+html[data-theme=dark] body.adm input,html[data-theme=dark] body.adm textarea,html[data-theme=dark] body.adm select{background:#1b1510!important;color:var(--ink)!important;border-color:#5a4a3a}
+html[data-theme=dark] body.adm .btn.gold{background:var(--gold)!important;color:#241a10!important}
+html[data-theme=dark] body.adm .btn.danger,html[data-theme=dark] body.adm .btn.del{background:#a8342b!important;border-color:#a8342b!important;color:#fff!important}
+html[data-theme=dark] body.adm .tbl td{border-color:var(--line)}
+html[data-theme=dark] body.adm .tag,html[data-theme=dark] body.adm .pillst,html[data-theme=dark] body.adm [class*=st-]{background:revert-layer}
+.btn.danger{color:#fff}
