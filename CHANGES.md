@@ -82,3 +82,4 @@ Each change is its own commit. Undo one with `git revert <hash>`.
 - Admin > Settings > "Email alert for new chats": on/off, sender, recipients (all owners+support or selected people), test email, provider status.
 - Provider: Gmail SMTP (port 465) with an app password, no domain needed (secrets SMTP_USER and SMTP_PASS on the edge function, never in repo or chat); Resend is an optional fallback (RESEND_API_KEY). Verified the function reaches Gmail and only fails on credentials; nothing is sent until real credentials are added.
 - Also: Meta empty-state text now points to Settings (where the Pixel ID lives).
+- Admin tab order: Analytics now sits right after Dashboard (owner/admin) so it is visible without scrolling the tab bar.
