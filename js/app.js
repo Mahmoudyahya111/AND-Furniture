@@ -25,7 +25,7 @@
       why1: 'توصيل لكل المحافظات', why2: 'دفع عند الاستلام', why3: 'خامات مختارة بعناية', why4: 'دعم مباشر عبر الشات وواتساب',
       visit: 'عنواننا', hours: 'مواعيد العمل', phone: 'الهاتف', soon: 'سيتم الإعلان عنه قريباً', closed: 'مغلق',
       d_sat: 'السبت', d_sun: 'الأحد', d_mon: 'الإثنين', d_tue: 'الثلاثاء', d_wed: 'الأربعاء', d_thu: 'الخميس', d_fri: 'الجمعة',
-      chatT: 'الدعم المباشر', chatHi: 'أهلاً بك! اكتب رسالتك وسنرد عليك في أقرب وقت.', chatPh: 'اكتب رسالتك...', send: 'إرسال', yourname: 'اسمك',
+      chatT: 'الدعم المباشر', chatHi: 'أهلاً بك! اكتب رسالتك وسنرد عليك في أقرب وقت.', chatOff: 'نحن غير متاحين الآن. اترك رسالتك وسنرد عليك فور عودتنا، أو راسلنا على واتساب.', chatOffWa: 'راسلنا على واتساب', chatPh: 'اكتب رسالتك...', send: 'إرسال', yourname: 'اسمك',
       err: 'حدث خطأ، حاول مرة أخرى.', demo: 'المتجر يعمل بوضع العرض ولم يتصل بقاعدة البيانات بعد، لا يمكن إرسال الطلبات الآن.', wa: 'اطلب عبر واتساب', follow: 'تابعنا', links: 'روابط', needlogin: 'سجّل الدخول أولاً',
       weight: 'الوزن', warranty: 'الضمان', origin: 'بلد الصنع', assembly: 'التركيب', care: 'العناية والتنظيف', lead: 'مدة التجهيز', sku: 'كود المنتج', finish: 'اللون / الخامة', specs: 'المواصفات', months: 'شهر', days: 'يوم', cm: 'سم', kg: 'كجم', only: 'متبقي', onlyN: 'آخر القطع: متبقي', wd: 'العرض', dp: 'العمق', ht: 'الارتفاع', rights: 'جميع الحقوق محفوظة', shipnote: 'رسوم التوصيل تُحسب تلقائياً', whapp: 'مرحباً AND.Furniture، أريد الاستفسار عن' },
     en: { home: 'Home', shop: 'Shop', about: 'About', contact: 'Contact', track: 'Track order', cart: 'Cart', account: 'My account', login: 'Sign in', logout: 'Sign out',
@@ -44,7 +44,7 @@
       why1: 'Delivery to all governorates', why2: 'Cash on delivery', why3: 'Carefully chosen materials', why4: 'Live support by chat and WhatsApp',
       visit: 'Our address', hours: 'Working hours', phone: 'Phone', soon: 'Will be announced soon', closed: 'Closed',
       d_sat: 'Saturday', d_sun: 'Sunday', d_mon: 'Monday', d_tue: 'Tuesday', d_wed: 'Wednesday', d_thu: 'Thursday', d_fri: 'Friday',
-      chatT: 'Live support', chatHi: 'Welcome! Write your message and we will reply as soon as we can.', chatPh: 'Type your message...', send: 'Send', yourname: 'Your name',
+      chatT: 'Live support', chatHi: 'Welcome! Write your message and we will reply as soon as we can.', chatOff: 'We are offline right now. Leave a message and we will reply when we are back, or message us on WhatsApp.', chatOffWa: 'Message us on WhatsApp', chatPh: 'Type your message...', send: 'Send', yourname: 'Your name',
       err: 'Something went wrong, please try again.', demo: 'The store is in demo mode and not connected to its database yet, so orders cannot be placed.', wa: 'Order on WhatsApp', follow: 'Follow us', links: 'Links', needlogin: 'Please sign in first',
       weight: 'Weight', warranty: 'Warranty', origin: 'Made in', assembly: 'Assembly', care: 'Care', lead: 'Preparation time', sku: 'SKU', finish: 'Colour / finish', specs: 'Specifications', months: 'months', days: 'days', cm: 'cm', kg: 'kg', only: 'left', onlyN: 'Only', wd: 'Width', dp: 'Depth', ht: 'Height', rights: 'All rights reserved', shipnote: 'Delivery fee is calculated automatically', whapp: 'Hello AND.Furniture, I would like to ask about' }
   };
@@ -149,15 +149,17 @@
   AND.chatInit = function () {
     var fab = document.createElement('button'); fab.className = 'chat-fab'; fab.setAttribute('aria-label', t('chatT')); fab.innerHTML = '<svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg>';
     var box = document.createElement('div'); box.className = 'chat-box';
-    box.innerHTML = '<header><span>' + t('chatT') + '</span><button aria-label="close">&times;</button></header><div class="msgs"></div><form class="chat-in"><input maxlength="2000" placeholder="' + t('chatPh') + '" aria-label="' + t('chatPh') + '"><button class="btn sm gold">' + t('send') + '</button></form>';
+    box.innerHTML = '<header><span>' + t('chatT') + '</span><button aria-label="close">&times;</button></header><div class="chat-off" hidden></div><div class="msgs"></div><form class="chat-in"><input maxlength="2000" placeholder="' + t('chatPh') + '" aria-label="' + t('chatPh') + '"><button class="btn sm gold">' + t('send') + '</button></form>';
     document.body.appendChild(box); document.body.appendChild(fab);
     var token = localStorage.getItem('and_chat_token'); if (!token) { token = (crypto.randomUUID ? crypto.randomUUID() : String(Math.random()).slice(2) + Date.now()) + '-' + Math.random().toString(36).slice(2); localStorage.setItem('and_chat_token', token); }
     var msgs = $('.msgs', box), last = 0, timer = null, seen = {};
     function add(m) { if (seen[m.id]) return; seen[m.id] = 1; last = Math.max(last, m.id); var d = document.createElement('div'); d.className = 'm ' + (m.sender === 'visitor' ? 'v' : 's'); d.textContent = m.body; msgs.appendChild(d); msgs.scrollTop = msgs.scrollHeight; }
     function hello() { var d = document.createElement('div'); d.className = 'm s'; d.textContent = t('chatHi'); msgs.appendChild(d); }
     hello();
+    async function status() { if (!AND.live) return; try { var r = await AND.sb.rpc('chat_status'), off = $('.chat-off', box), on = !(r.data && r.data.online === false); fab.classList.toggle('offline', !on); if (on) { off.hidden = true; return; } var w = String((AND.settings.store || {}).whatsapp || '').replace(/\D/g, ''); off.innerHTML = '<span>' + t('chatOff') + '</span>' + (w ? '<a class="btn sm wa" target="_blank" rel="noopener" href="' + AND.esc(AND.waLink(t('whapp'))) + '">' + t('chatOffWa') + '</a>' : ''); off.hidden = false; } catch (e) {} }
+    status(); setInterval(status, 120000);
     async function poll() { if (!AND.live) return; var r = await AND.sb.rpc('chat_visitor_poll', { p_token: token, p_after: last }); if (r.data && r.data.messages) r.data.messages.forEach(add); }
-    function open() { box.classList.add('open'); poll(); clearInterval(timer); timer = setInterval(poll, 4000); setTimeout(function () { $('input', box).focus(); }, 50); }
+    function open() { box.classList.add('open'); poll(); status(); clearInterval(timer); timer = setInterval(poll, 4000); setTimeout(function () { $('input', box).focus(); }, 50); }
     function close() { box.classList.remove('open'); clearInterval(timer); }
     fab.onclick = function () { box.classList.contains('open') ? close() : open(); };
     $('header button', box).onclick = close;
