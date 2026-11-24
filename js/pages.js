@@ -59,7 +59,7 @@
         (p.is_placeholder ? '<p class="ph-note">' + t('ph') + '</p>' : '') + '</div><div><a href="shop.html" style="color:var(--muted)">&larr; ' + t('back') + '</a><h1>' + esc(AND.pick(p, 'name')) + '</h1><div class="price">' + AND.money(p.price) + (sale ? '<s>' + AND.money(p.compare_at) + '</s>' : '') + '</div>' +
         '<p>' + esc(AND.pick(p, 'desc')) + '</p>' + (p.colors && p.colors.length ? '<b>' + t('color') + '</b><div class="swatches">' + p.colors.map(function (k) { return '<button data-col="' + esc(k) + '" class="' + (k === color ? 'on' : '') + '">' + esc(cname(k)) + '</button>'; }).join('') + '</div>' : '') +
         '<div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:14px 0"><div class="qty"><button id="mi">&minus;</button><span id="qv">' + qty + '</span><button id="pl">+</button></div><button class="btn gold" id="addb"' + (out ? ' disabled' : '') + '>' + (out ? t('out') : t('add')) + '</button>' +
-        '<a class="btn wa" target="_blank" rel="noopener" href="' + esc(AND.waLink(t('whapp') + ' ' + AND.pick(p, 'name'))) + '">' + t('wa') + '</a></div>' +
+        (AND.settings.wa_order_enabled === false ? '' : '<a class="btn wa" target="_blank" rel="noopener" href="' + esc(AND.waLink(t('whapp') + ' ' + AND.pick(p, 'name'))) + '">' + t('wa') + '</a>') + '</div>' +
         '<div class="spec">' + specRows(p, out).map(function (r) { return '<div><span>' + r[0] + '</span><span dir="auto">' + r[1] + '</span></div>'; }).join('') + '</div></div>';
       $('#pd').onclick = function (e) {
         var x = e.target; if (x.getAttribute('data-i') != null) draw(+x.getAttribute('data-i'));
