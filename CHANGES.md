@@ -69,3 +69,9 @@ Each change is its own commit. Undo one with `git revert <hash>`.
 
 ## 32. Per-agent chat stats
 - Chat console "Stats" tab: all chats, open, average rating, average first-reply time, and per agent: chats handled, closed, first-reply time, rating, % solved. Computed from existing chat columns, no DB change.
+
+## 33. Analytics (AND only)
+- DB additive (sql/analytics.sql; no existing object changed): table page_events (RLS, staff owner/admin read only), functions track_event (anon can only add a view/engage row, inputs length-checked), analytics_summary (owner/admin only), can_view_analytics. Channel is classified on the server: meta_paid (Meta source + paid medium, or fbclid + paid medium), meta_click (fbclid or Meta source without paid tag), meta_organic (Facebook/Instagram referrer), referral, direct.
+- js/track.js on the storefront pages: first-party, no cookies, no names or IPs, random per-tab session id, UTM/fbclid kept for the whole visit, seconds on page. Writes only to this store's own Supabase project (js/config.js). Skips bots, Do-Not-Track.
+- Admin > Analytics (owner/admin): visitors, page views, pages per visit, time on page, daily chart, traffic sources, top pages, devices. "Meta ads visitors per page" plus campaign table show only when a Pixel ID is saved AND ad-sourced visits exist; otherwise "No data yet. Add your Pixel ID in Marketing and run ads with UTM links".
+- Honest limits shown in the page: in-app browsers and ad blockers undercount; campaign detail needs UTM-tagged links.
