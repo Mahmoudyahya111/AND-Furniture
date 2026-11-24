@@ -134,15 +134,30 @@
     var box = $('#acbox'); if (!AND.live) { box.innerHTML = '<div class="note err">' + t('demo') + '</div>'; return; }
     var sess = (await AND.sb.auth.getSession()).data.session;
     if (!sess) {
-      var mode = 'in';
+      var mode = 'in', AR2 = AND.lang === 'ar', LL = function (a, e) { return AR2 ? a : e; };
+      var emsg = function (m) { m = String(m || ''); var l = m.toLowerCase();
+        if (l.indexOf('rate limit') > -1 || l.indexOf('too many') > -1 || l.indexOf('security purposes') > -1) return LL('تم إرسال رسائل كثيرة خلال وقت قصير. حاول بعد قليل أو اتصل بنا.', 'Too many emails were sent in a short time. Please try again a little later or contact us.');
+        if (l.indexOf('invalid login') > -1) return LL('البريد أو كلمة المرور غير صحيحة. إذا لم تنشئ حساباً اختر "إنشاء حساب".', 'Wrong email or password. If you have no account, choose "Create account".');
+        if (l.indexOf('not confirmed') > -1) return LL('لم يتم تأكيد البريد بعد. افتح رسالة التأكيد ثم سجل الدخول.', 'Email not confirmed yet. Open the confirmation email, then sign in.');
+        if (l.indexOf('already') > -1 && l.indexOf('regist') > -1) return LL('هذا البريد لديه حساب بالفعل. اختر "دخول".', 'This email already has an account. Choose "Sign in".');
+        return m; };
       (function draw() {
-        box.innerHTML = '<form class="panel f" id="af" style="max-width:440px;margin:auto"><h2>' + (mode === 'in' ? t('signin') : t('signup')) + '</h2>' + (mode === 'up' ? '<div><label>' + t('fname') + '</label><input name="n" required></div>' : '') + '<div><label>' + t('email') + '</label><input name="e" type="email" dir="ltr" required autocomplete="email"></div><div><label>' + t('pass') + '</label><input name="p" type="password" minlength="8" required autocomplete="' + (mode === 'in' ? 'current-password' : 'new-password') + '"></div><div id="aer"></div><button class="btn gold">' + (mode === 'in' ? t('signin') : t('signup')) + '</button><a href="#" id="sw">' + (mode === 'in' ? t('signup') : t('signin')) + '</a>' + (mode === 'in' ? '<a href="#" id="fg">' + t('forgot') + '</a>' : '') + '</form>';
-        $('#sw').onclick = function (e) { e.preventDefault(); mode = mode === 'in' ? 'up' : 'in'; draw(); };
-        if ($('#fg')) $('#fg').onclick = async function (e) { e.preventDefault(); var em = $('#af').e.value; if (!em) return; await AND.sb.auth.resetPasswordForEmail(em, { redirectTo: new URL('account.html', location.href).href }); $('#aer').innerHTML = '<div class="note okb">' + t('resetsent') + '</div>'; };
+        var su = mode === 'up', fl = function (n, lab, ty, ac, ex) { return '<div><label for="c_' + n + '">' + lab + '</label><input id="c_' + n + '" name="' + n + '" type="' + ty + '" autocomplete="' + ac + '" required' + (ex || '') + '></div>'; };
+        box.innerHTML = '<div class="authc"><div class="seg"><button type="button" data-m="in" class="' + (!su ? 'on' : '') + '">' + t('signin') + '</button><button type="button" data-m="up" class="' + (su ? 'on' : '') + '">' + t('signup') + '</button></div><form class="f" id="af" novalidate><h2>' + (su ? LL('إنشاء حساب جديد', 'Create your account') : LL('مرحباً بعودتك', 'Welcome back')) + '</h2>' + (su ? fl('n', t('fname'), 'text', 'name') : '') + fl('e', t('email'), 'email', 'email', ' dir="ltr" inputmode="email"') + fl('p', t('pass'), 'password', su ? 'new-password' : 'current-password', su ? ' minlength="8"' : '') + (su ? fl('p2', LL('تأكيد كلمة المرور', 'Confirm password'), 'password', 'new-password') + '<div class="help">' + LL('8 أحرف على الأقل.', 'At least 8 characters.') + '</div>' : '') + '<div id="aer" role="alert"></div><button class="btn gold" id="asb" style="width:100%;min-height:50px">' + (su ? t('signup') : t('signin')) + '</button>' + (!su ? '<a href="#" id="fg" style="text-align:center">' + t('forgot') + '</a>' : '') + '</form></div>';
+        box.querySelectorAll('[data-m]').forEach(function (b) { b.onclick = function () { mode = b.getAttribute('data-m'); draw(); }; });
+        var say = function (c, m) { $('#aer').innerHTML = '<div class="note ' + c + '">' + esc(m) + '</div>'; };
+        if ($('#fg')) $('#fg').onclick = async function (e) { e.preventDefault(); var em = $('#af').e.value.trim(); if (!em) return say('err', LL('اكتب بريدك أولاً.', 'Enter your email first.')); var r = await AND.sb.auth.resetPasswordForEmail(em, { redirectTo: new URL('account.html', location.href).href }); r.error ? say('err', emsg(r.error.message)) : say('okb', t('resetsent')); };
         $('#af').onsubmit = async function (e) {
-          e.preventDefault(); var f = e.target, r = mode === 'in' ? await AND.sb.auth.signInWithPassword({ email: f.e.value, password: f.p.value }) : await AND.sb.auth.signUp({ email: f.e.value, password: f.p.value, options: { data: { full_name: f.n.value }, emailRedirectTo: new URL('account.html', location.href).href } });
-          if (r.error) { $('#aer').innerHTML = '<div class="note err">' + esc(r.error.message) + '</div>'; return; }
-          if (mode === 'up' && !r.data.session) { $('#aer').innerHTML = '<div class="note okb">' + t('checkmail') + '</div>'; return; } location.reload();
+          e.preventDefault(); var f = e.target, em = f.e.value.trim(), bt = $('#asb');
+          if (!/^\S+@\S+\.\S+$/.test(em)) return say('err', LL('اكتب بريداً إلكترونياً صحيحاً.', 'Enter a valid email address.'));
+          if (!f.p.value) return say('err', LL('اكتب كلمة المرور.', 'Enter your password.'));
+          if (su) { if (f.p.value.length < 8) return say('err', LL('كلمة المرور يجب ألا تقل عن 8 أحرف.', 'Password must be at least 8 characters.')); if (f.p.value !== f.p2.value) return say('err', LL('كلمتا المرور غير متطابقتين.', 'The two passwords do not match.')); }
+          bt.disabled = true; var r;
+          try { r = su ? await AND.sb.auth.signUp({ email: em, password: f.p.value, options: { data: { full_name: f.n.value }, emailRedirectTo: new URL('account.html', location.href).href } }) : await AND.sb.auth.signInWithPassword({ email: em, password: f.p.value }); } catch (x) { r = { error: x }; }
+          bt.disabled = false;
+          if (r.error) return say('err', emsg(r.error.message));
+          if (su && !r.data.session) return say('okb', t('checkmail'));
+          location.reload();
         };
       })(); return;
     }

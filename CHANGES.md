@@ -12,3 +12,4 @@ Each change is its own commit. Undo one with `git revert <hash>`.
 | 6 | Furniture fields in the database (SKU, W/D/H, weight, assembly, warranty, origin, care, lead time, low-stock threshold) plus realistic sample values (sql/03, sql/04). Additive only, backup taken first |
 | 7 | Admin product editor rebuilt: sections, stock stepper, low-stock alert, image upload/replace/reorder/main, furniture specs; product list search, Low/Out badges and filter |
 | 8 | Store: product page specification table and "only N left" using each product threshold; mobile-first admin (stacked cards, full-screen editor, wrapping top bar) |
+| 9 | Admin sign-in / create-account redesigned: separate modes with their own forms (confirm password, validation, friendly errors incl. email rate limit, back-to-sign-in); same redesign on the customer account page |
