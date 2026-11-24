@@ -63,3 +63,10 @@ footer.foot{background:#2a2019;color:#d9cbb6}footer.foot h4{color:var(--gold)}fo
  .nx{border-radius:0!important;display:block;width:100%;text-align:start;background:none;border:0;border-bottom:1px solid var(--line)!important;padding:14px 4px;font:inherit;font-weight:700;color:var(--taupe);text-decoration:none;cursor:pointer;border-bottom:1px solid var(--line)}.nx:last-child{border-bottom:0}
  header.top .bar{gap:12px}.brand span{max-width:46vw;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.hx .kicker{font-size:.8rem}
 }
+html[data-theme=dark] .tabs button{background:var(--card);color:var(--ink)}html[data-theme=dark] .tabs button.on{background:var(--gold);color:#241a10;border-color:var(--gold)}
+html[data-theme=dark] .modal>div,html[data-theme=dark] .qvm>div,html[data-theme=dark] .drawer,html[data-theme=dark] .chat-box,html[data-theme=dark] .cat,html[data-theme=dark] .pill{background:var(--card);color:var(--ink);border-color:var(--line)}
+html[data-theme=dark] .pill.on{background:var(--gold);color:#241a10}
+html[data-theme=dark] .card,html[data-theme=dark] .steps li,html[data-theme=dark] .tq{background:var(--card);border-color:var(--line)}
+html[data-theme=dark] .card .imgwrap,html[data-theme=dark] .card .ph{background:#2a2019}
+html[data-theme=dark] h1,html[data-theme=dark] h2,html[data-theme=dark] h3,html[data-theme=dark] .brand,html[data-theme=dark] nav.links a{color:var(--ink)}
+html[data-theme=dark] .hx h1,html[data-theme=dark] .cta-in h2{color:#fff}
