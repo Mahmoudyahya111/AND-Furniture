@@ -108,3 +108,9 @@ html[data-theme=dark] body.adm .tag,html[data-theme=dark] body.adm .pillst,html[
 .btn.danger{color:#fff}
 .tabs{scrollbar-width:none;-ms-overflow-style:none}.tabs::-webkit-scrollbar{display:none;height:0}
 @media(max-width:820px){.tbl td:has(>b){flex-wrap:wrap;justify-content:flex-end;row-gap:2px}.tbl td:has(>b)>*{max-width:100%}.tbl td:has(>b)>b{flex:1 1 60%;text-align:end}.tbl td:has(>b)>*:not(b){flex:0 1 auto;font-size:.8rem;color:var(--muted)}}
+html[data-theme=dark] body.adm span.st{color:#3a2e25}
+html[data-theme=dark] body.adm span.st.new{background:#fde8c8;color:#8a5a00}
+html[data-theme=dark] body.adm span.st.confirmed,html[data-theme=dark] body.adm span.st.preparing{background:#dbe8f7;color:#1f4f87}
+html[data-theme=dark] body.adm span.st.out_for_delivery{background:#e5dcf7;color:#4d2f8a}
+html[data-theme=dark] body.adm span.st.delivered,html[data-theme=dark] body.adm span.st.paid{background:#d8f0e0;color:#1f5d39}
+html[data-theme=dark] body.adm span.st.cancelled,html[data-theme=dark] body.adm span.st.refunded{background:#f6d9d6;color:#8a2a22}
