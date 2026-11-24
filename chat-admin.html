@@ -15,7 +15,7 @@ body.cc{background:var(--bg);color:var(--ink);margin:0}
 .cc main{display:grid;grid-template-columns:340px 1fr;gap:14px;padding:14px 16px;max-width:1240px;margin:0 auto;height:calc(100vh - 70px)}
 @media(max-width:820px){.cc main{grid-template-columns:1fr;height:auto}.cc.insel #lp{display:none}.cc:not(.insel) #conv{display:none}}
 .pane{background:var(--card);border:1px solid var(--line);border-radius:var(--r);display:flex;flex-direction:column;min-height:0;overflow:hidden;box-shadow:var(--sh)}
-.tabs{display:flex;gap:4px;padding:10px 10px 0}.tabs button{flex:1;padding:8px 4px;border:0;border-bottom:2px solid transparent;background:none;cursor:pointer;color:var(--muted);font:inherit}
+.tabs{display:flex;flex-wrap:wrap;gap:4px;padding:10px 10px 0}.tabs button{flex:1 1 auto;min-width:0!important;padding:8px 4px;border:0;border-bottom:2px solid transparent;background:none;cursor:pointer;color:var(--muted);font:inherit}
 .tabs button.on{color:var(--ink);border-color:var(--gold);font-weight:700}
 .sr{margin:10px;width:calc(100% - 20px)}
 #list{overflow-y:auto;flex:1;min-height:200px}
