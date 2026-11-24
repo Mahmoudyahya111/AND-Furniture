@@ -90,3 +90,7 @@ html[data-theme=dark] .icol,html[data-theme=dark] select,html[data-theme=dark] .
 html[data-theme=dark] fieldset{border-color:var(--line)}html[data-theme=dark] legend,html[data-theme=dark] label{color:var(--ink)}
 html[data-theme=dark] .btn.sm,html[data-theme=dark] .btn.ghost{background:transparent;color:var(--ink);border-color:#5a4a3a}
 html[data-theme=dark] .btn.danger,html[data-theme=dark] .btn.del{color:#fff}
+html[data-theme=dark] .swatches button,html[data-theme=dark] .qty,html[data-theme=dark] .qty button,html[data-theme=dark] .qty span{background:var(--card);color:var(--ink);border-color:#5a4a3a}
+html[data-theme=dark] .swatches button.on{background:var(--gold);color:#241a10;border-color:var(--gold)}
+html[data-theme=dark] .panel .line,html[data-theme=dark] .spec>div{border-color:var(--line)}
+html[data-theme=dark] .empty,html[data-theme=dark] .muted{color:var(--muted)}
