@@ -33,11 +33,22 @@
     setInterval(async function () { await sb.rpc('agent_login'); loadPres(); var r = await sb.rpc('staff_list'); staff = r.data || staff; }, 60000);
   }
   async function loadPres() { var r = await sb.from('agent_presence').select('status').eq('user_id', me.id).maybeSingle(); pres = (r.data && r.data.status) || 'offline'; $('#ps').value = pres; $('#pd').style.color = DOT[pres]; }
-  var F = { active: function (c) { return c.status !== 'closed'; }, mine: function (c) { return c.claimed_by === me.id && c.status !== 'closed'; }, closed: function (c) { return c.status === 'closed'; }, all: function () { return true; } };
-  function tabs() { $('#tabs').innerHTML = [['active', L('نشطة', 'Active')], ['mine', L('محادثاتي', 'Mine')], ['closed', L('مغلقة', 'Closed')], ['all', L('الكل', 'All')]].map(function (a) { return '<button data-f="' + a[0] + '" class="' + (a[0] === filt ? 'on' : '') + '">' + a[1] + ' (' + chats.filter(F[a[0]]).length + ')</button>'; }).join(''); }
+  var F = { active: function (c) { return c.status !== 'closed'; }, mine: function (c) { return c.claimed_by === me.id && c.status !== 'closed'; }, closed: function (c) { return c.status === 'closed'; }, all: function () { return true; }, stats: function () { return false; } };
+  function tabs() { $('#tabs').innerHTML = [['active', L('نشطة', 'Active')], ['mine', L('محادثاتي', 'Mine')], ['closed', L('مغلقة', 'Closed')], ['all', L('الكل', 'All')], ['stats', L('إحصائيات', 'Stats')]].map(function (a) { return '<button data-f="' + a[0] + '" class="' + (a[0] === filt ? 'on' : '') + '">' + a[1] + (a[0] === 'stats' ? '' : ' (' + chats.filter(F[a[0]]).length + ')') + '</button>'; }).join(''); }
+  function statsHtml() {
+    var A = {}, tot = chats.length, rated = chats.filter(function (c) { return c.rating; }), open = chats.filter(function (c) { return c.status !== 'closed'; }).length;
+    chats.forEach(function (c) { if (!c.claimed_by) return; var a = A[c.claimed_by] || (A[c.claimed_by] = { n: c.claimed_name || '', h: 0, cl: 0, rt: [], rs: 0, rn: 0, fr: [] }); a.h++; if (c.status === 'closed') a.cl++; if (c.rating) { a.rt.push(c.rating); if (c.resolved) a.rs++; a.rn++; } if (c.first_reply_at) a.fr.push((new Date(c.first_reply_at) - new Date(c.created_at)) / 60000); });
+    var avg = function (x) { return x.length ? x.reduce(function (p, q) { return p + q; }, 0) / x.length : null; }, f1 = function (n) { return n === null ? '–' : (Math.round(n * 10) / 10); };
+    var allfr = chats.filter(function (c) { return c.first_reply_at; }).map(function (c) { return (new Date(c.first_reply_at) - new Date(c.created_at)) / 60000; });
+    var h = '<div class="stg"><div><b>' + tot + '</b><small>' + L('كل المحادثات', 'All chats') + '</small></div><div><b>' + open + '</b><small>' + L('مفتوحة', 'Open') + '</small></div><div><b>' + f1(avg(rated.map(function (c) { return c.rating; }))) + (rated.length ? ' ★' : '') + '</b><small>' + L('متوسط التقييم', 'Avg rating') + '</small></div><div><b>' + (allfr.length ? f1(avg(allfr)) + L(' د', ' min') : '–') + '</b><small>' + L('أول رد (متوسط)', 'Avg first reply') + '</small></div></div>';
+    var ids = Object.keys(A);
+    if (!ids.length) return h + '<div class="empty">' + L('لا توجد بيانات للموظفين بعد.', 'No agent data yet.') + '</div>';
+    return h + ids.map(function (k) { var a = A[k]; return '<div class="it"><div class="r"><b>' + esc(a.n) + '</b><span class="tag">' + a.h + ' ' + L('محادثة', 'chats') + '</span></div><small>' + L('أُغلقت ', 'Closed ') + a.cl + ' · ' + L('أول رد ', 'First reply ') + (a.fr.length ? f1(avg(a.fr)) + L(' د', ' min') : '–') + ' · ' + L('التقييم ', 'Rating ') + (a.rt.length ? f1(avg(a.rt)) + '★ (' + a.rt.length + ')' : '–') + ' · ' + L('حُلّت ', 'Solved ') + (a.rn ? Math.round(a.rs * 100 / a.rn) + '%' : '–') + '</small></div>'; }).join('');
+  }
   async function list() {
     var r = await sb.from('chats').select('*').order('last_at', { ascending: false }).limit(300); if (r.error) return; chats = r.data || []; tabs();
     var v = chats.filter(F[filt]).filter(function (c) { return !q || (c.id + ' ' + nm(c)).toLowerCase().indexOf(q) >= 0; });
+    if (filt === 'stats') { $('#list').innerHTML = statsHtml(); return; }
     $('#list').innerHTML = v.map(function (c) { var st = c.status === 'closed' ? L('مغلقة', 'Closed') : c.claimed_name ? esc(c.claimed_name) : L('بانتظار موظف', 'Waiting'); return '<div class="it ' + (c.id === sel ? 'on' : '') + '" data-c="' + c.id + '"><div class="r"><b>#' + c.id + ' ' + esc(nm(c)) + (c.unread_staff > 0 ? '<span class="unr">' + c.unread_staff + '</span>' : '') + '</b><span class="tag ' + (c.status === 'closed' ? 'cl' : '') + '">' + st + '</span></div><small>' + ago(c.last_at) + (c.rating ? ' · ' + '★'.repeat(c.rating) : '') + '</small></div>'; }).join('') || '<div class="empty">' + L('لا توجد محادثات', 'No chats here.') + '</div>';
     if (sel) await conv();
   }

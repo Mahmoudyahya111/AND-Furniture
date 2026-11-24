@@ -66,3 +66,6 @@ Each change is its own commit. Undo one with `git revert <hash>`.
 
 ## 31. Customer satisfaction survey in the storefront chat
 - When an agent closes a chat, the visitor's chat window shows a short survey (1-5 stars, solved yes/no, optional comment). Calls chat_visitor_rate (once per chat). chat_visitor_poll now also returns `rated` (additive; old version in backups/chat-visitor-poll-before-survey.sql, new in sql/chat-survey-poll.sql). AR/EN, dark/light.
+
+## 32. Per-agent chat stats
+- Chat console "Stats" tab: all chats, open, average rating, average first-reply time, and per agent: chats handled, closed, first-reply time, rating, % solved. Computed from existing chat columns, no DB change.
