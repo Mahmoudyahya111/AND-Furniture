@@ -9,26 +9,26 @@
   var ar = AND.lang === 'ar', $ = function (s, r) { return (r || document).querySelector(s); }, esc = AND.esc;
   var X = ar ? {
     k: ['غرف المعيشة', 'غرف النوم', 'السفرة'], h: ['بيتك يستحق أن يكون أجمل', 'نوم هادئ في غرفة تشبهك', 'مائدة تجمع كل العائلة'],
-    p: ['أثاث مصمم بعناية بخامات مختارة ويصل إلى بابك.', 'غرف نوم متكاملة بتفاصيل أنيقة وراحة تدوم.', 'سفر وطاولات بتصاميم عملية ودافئة.'],
-    scroll: 'اكتشف', trust: ['توصيل لكل المحافظات', 'دفع عند الاستلام', 'خامات مختارة بعناية', 'دعم عبر الشات وواتساب'],
+    p: ['أثاث مصمم بعناية بخامات مختارة.', 'غرف نوم متكاملة بتفاصيل أنيقة وراحة تدوم.', 'سفر وطاولات بتصاميم عملية ودافئة.'],
+    scroll: 'اكتشف', trust: ['', 'دفع عند الاستلام', 'خامات مختارة بعناية', 'دعم عبر الشات وواتساب'], dfee: 'رسوم التوصيل', free: 'توصيل مجاني فوق', egp: 'ج.م',
     rooms: 'تسوق حسب الغرفة', roomsP: 'اختر الغرفة وابدأ من التصميم الذي يعجبك.', explore: 'استكشف', n: 'قطعة',
-    stats: [['منتج متاح', 'p'], ['قسم', 'c'], ['محافظة نوصلها', 27], ['ساعة دعم على الشات', 24]],
-    storyK: 'لماذا AND.Furniture', storyH: 'أثاث يُصنع ليعيش معك', storyP: 'نختار كل قطعة لتجمع بين الشكل الأنيق والراحة اليومية، ونرافقك من اختيار القطعة حتى وصولها لبيتك.',
-    howH: 'كيف تطلب', how: [['اختر', 'تصفح الأقسام واختر القطعة واللون المناسبين.'], ['اطلب', 'أكمل بياناتك وادفع عند الاستلام أو بالطريقة التي تفضلها.'], ['نؤكد', 'نتواصل معك لتأكيد الطلب وموعد التوصيل.'], ['استلم', 'تصلك القطعة إلى باب بيتك وتتابع الطلب برقمه.']],
+    stats: [['منتج متاح', 'p'], ['قسم', 'c'], ['طرق دفع متاحة', 'm']],
+    storyK: 'لماذا AND.Furniture', storyH: 'أثاث يُصنع ليعيش معك', storyP: 'نختار كل قطعة لتجمع بين الشكل الأنيق والراحة اليومية، ونرافقك بعد الطلب.',
+    howH: 'كيف تطلب', how: [['اختر', 'تصفح الأقسام واختر القطعة واللون المناسبين.'], ['اطلب', 'أكمل بياناتك وادفع عند الاستلام أو بالطريقة التي تفضلها.'], ['نؤكد', 'نتابع معك بخصوص طلبك.'], ['استلم', 'تتابع طلبك برقم الطلب.']],
     tH: 'آراء العملاء', tNote: 'نماذج لآراء العملاء، تُستبدل بآراء حقيقية قريباً.',
     tt: [['تعامل راقٍ وقطعة بنفس جمال الصور.', 'عميل نموذجي'], ['الطلب كان سهل والتواصل سريع جداً.', 'عميلة نموذجية'], ['أحببت الخامات وطريقة التوصيل.', 'عميل نموذجي']],
-    ctaH: 'جاهز تجهز بيتك؟', ctaP: 'اسألنا عن أي قطعة أو تصميم خاص، ونرد عليك فوراً.', c1: 'تصفح المنتجات', c2: 'تحدث معنا'
+    ctaH: 'جاهز تجهز بيتك؟', ctaP: 'اسألنا عن أي قطعة أو تصميم خاص. ', c1: 'تصفح المنتجات', c2: 'تحدث معنا'
   } : {
     k: ['Living rooms', 'Bedrooms', 'Dining'], h: ['A home that feels like you', 'Quiet nights, beautifully made', 'The table everyone gathers at'],
-    p: ['Carefully designed furniture in chosen materials, delivered to your door.', 'Complete bedrooms with elegant detail and lasting comfort.', 'Dining sets and tables, practical and warm.'],
-    scroll: 'Discover', trust: ['Delivery to all governorates', 'Cash on delivery', 'Carefully chosen materials', 'Support by chat and WhatsApp'],
+    p: ['Carefully designed furniture in chosen materials.', 'Complete bedrooms with elegant detail and lasting comfort.', 'Dining sets and tables, practical and warm.'],
+    scroll: 'Discover', trust: ['', 'Cash on delivery', 'Carefully chosen materials', 'Support by chat and WhatsApp'], dfee: 'Delivery fee', free: 'Free delivery over', egp: 'EGP',
     rooms: 'Shop by room', roomsP: 'Pick a room and start with the design you love.', explore: 'Explore', n: 'pieces',
-    stats: [['Products available', 'p'], ['Collections', 'c'], ['Governorates we deliver to', 27], ['Hours of chat support', 24]],
-    storyK: 'Why AND.Furniture', storyH: 'Furniture made to live with you', storyP: 'We pick every piece to balance elegant looks with everyday comfort, and stay with you from choosing to delivery.',
-    howH: 'How it works', how: [['Choose', 'Browse the collections and pick your piece and colour.'], ['Order', 'Add your details and pay on delivery or the way you prefer.'], ['Confirm', 'We contact you to confirm the order and delivery time.'], ['Receive', 'It arrives at your door and you track it by order number.']],
+    stats: [['Products available', 'p'], ['Collections', 'c'], ['Payment methods', 'm']],
+    storyK: 'Why AND.Furniture', storyH: 'Furniture made to live with you', storyP: 'We pick every piece to balance elegant looks with everyday comfort, and stay with you after you order.',
+    howH: 'How it works', how: [['Choose', 'Browse the collections and pick your piece and colour.'], ['Order', 'Add your details and pay on delivery or the way you prefer.'], ['Confirm', 'We follow up with you about your order.'], ['Receive', 'Track your order with its order number.']],
     tH: 'What customers say', tNote: 'Sample reviews, to be replaced with real customer reviews soon.',
     tt: [['Refined service and a piece as good as the photos.', 'Sample customer'], ['Ordering was easy and replies were quick.', 'Sample customer'], ['Loved the materials and the delivery.', 'Sample customer']],
-    ctaH: 'Ready to furnish your home?', ctaP: 'Ask us about any piece or a custom design. We reply right away.', c1: 'Browse products', c2: 'Talk to us'
+    ctaH: 'Ready to furnish your home?', ctaP: 'Ask us about any piece or a custom design.', c1: 'Browse products', c2: 'Talk to us'
   };
   /* ---- designed room scenes ---- */
   var G = '#c9a45c', C = '#faf6f0';
@@ -66,20 +66,23 @@
   }
   /* ---- trust strip, rooms, stats, story, how, testimonials, cta ---- */
   var ICON = ['<path d="M3 7h11v9H3zM14 10h4l3 3v3h-7zM7 19a2 2 0 100-4 2 2 0 000 4zM17 19a2 2 0 100-4 2 2 0 000 4z"/>', '<rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="3"/>', '<path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7z"/>', '<path d="M4 5h16v11H9l-5 4z"/>'];
-  var tr = $('#trust'); if (tr) tr.innerHTML = '<div class="wrap trust-in">' + X.trust.map(function (s, i) { return '<div class="tb"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">' + ICON[i] + '</svg><span>' + s + '</span></div>'; }).join('') + '</div>';
+  function buildTrust() {
+  var dl = (function () { var f = Number(AND.settings.delivery_fee), fo = Number(AND.settings.free_delivery_over); if (isNaN(f)) return ''; return X.dfee + ': ' + (f === 0 ? '0' : f) + ' ' + X.egp + (fo > 0 ? ' · ' + X.free + ' ' + fo + ' ' + X.egp : ''); })(); X.trust[0] = dl || X.trust[0]; var tr = $('#trust'); if (tr) tr.innerHTML = '<div class="wrap trust-in">' + X.trust.filter(Boolean).map(function (s, i) { return '<div class="tb"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">' + ICON[i] + '</svg><span>' + s + '</span></div>'; }).join('') + '</div>';
+  }
   var tint = ['linear-gradient(145deg,#6b5a4c,#3a2e25)', 'linear-gradient(145deg,#8a6a3a,#4a3b2f)', 'linear-gradient(145deg,#a8552a,#4b3427)', 'linear-gradient(145deg,#5d6b57,#2f3a2f)', 'linear-gradient(145deg,#7a6653,#2a2019)'];
   AND.catalog().then(function (c) {
+    buildTrust();
     var h = $('#h-cats'); if (h) h.textContent = X.rooms; var rp = $('#rooms-p'); if (rp) rp.textContent = X.roomsP;
     var wide = function (i, n) { var rest = (n - 1) % 4; return rest && i > n - 1 - rest ? 4 / rest : 0; };
     var box = $('#cats'); if (box) { box.className = 'tiles'; box.innerHTML = c.cats.slice(0, 8).map(function (k, i) {
       var ps = c.prods.filter(function (p) { return p.category_id === k.id; }), im = IMG.rooms[k.slug] || (ps[0] && ps[0].images && ps[0].images[0]) || '', n = ps.length;
       return '<a class="tile' + (i === 0 ? ' big' : '') + (wide(i, Math.min(8, c.cats.length)) ? ' w' + wide(i, Math.min(8, c.cats.length)) : '') + '" href="shop.html?cat=' + esc(k.slug) + '" style="background:' + tint[i % 5] + '">' + (im ? '<img src="' + esc(im) + '" alt="" loading="lazy">' : '') + '<span class="tile-sh"></span><span class="tile-t"><small>' + n + ' ' + X.n + '</small><b>' + esc(AND.pick(k, 'name')) + '</b><em>' + X.explore + ' <i>&rarr;</i></em></span></a>'; }).join(''); }
-    var st = $('#stats'); if (st) { st.innerHTML = '<div class="wrap stats-in">' + X.stats.map(function (s) { var v = s[1] === 'p' ? c.prods.length : s[1] === 'c' ? c.cats.length : s[1]; return '<div class="stat"><b data-n="' + v + '">0</b><span>' + s[0] + '</span></div>'; }).join('') + '</div>'; countersInit(st); }
+    var st = $('#stats'); if (st) { st.innerHTML = '<div class="wrap stats-in">' + X.stats.map(function (s) { var pm = AND.settings.payment_methods || { cod: true }, v = s[1] === 'p' ? c.prods.length : s[1] === 'c' ? c.cats.length : (pm.cod !== false ? 1 : 0) + (pm.instapay ? 1 : 0) + (pm.wallet ? 1 : 0) + (pm.bank ? 1 : 0); return '<div class="stat"><b data-n="' + v + '">0</b><span>' + s[0] + '</span></div>'; }).join('') + '</div>'; countersInit(st); }
   });
   var sy = $('#story'); if (sy) sy.innerHTML = '<div class="wrap story-in"><div class="story-art" data-rv>' + '<svg viewBox="0 0 400 460" aria-hidden="true"><defs><linearGradient id="sg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#c9a45c"/><stop offset="1" stop-color="#6b5a4c"/></linearGradient></defs><rect width="400" height="460" rx="28" fill="url(#sg)"/><circle cx="300" cy="120" r="64" fill="#faf6f0" opacity=".18"/><rect x="60" y="270" width="280" height="80" rx="26" fill="#faf6f0" opacity=".92"/><rect x="40" y="240" width="60" height="130" rx="24" fill="#faf6f0" opacity=".7"/><rect x="300" y="240" width="60" height="130" rx="24" fill="#faf6f0" opacity=".7"/><rect x="90" y="360" width="12" height="30" fill="#3a2e25"/><rect x="298" y="360" width="12" height="30" fill="#3a2e25"/></svg><img class="story-logo" src="img/logo-512.png" alt="AND.Furniture" width="120" height="120"></div>' +
     '<div data-rv><div class="kicker">' + X.storyK + '</div><h2>' + X.storyH + '</h2><p class="lead">' + X.storyP + '</p><div id="why" class="whys"></div></div></div>';
   var hw = $('#how'); if (hw) hw.innerHTML = '<div class="wrap"><h2 class="ctr">' + X.howH + '</h2><ol class="steps">' + X.how.map(function (s, i) { return '<li data-rv><span class="sn">' + (i + 1) + '</span><b>' + s[0] + '</b><p>' + s[1] + '</p></li>'; }).join('') + '</ol></div>';
-  var ts = $('#testi'); if (ts) ts.innerHTML = '<div class="wrap"><h2 class="ctr">' + X.tH + '</h2><div class="tgrid">' + X.tt.map(function (q) { return '<figure data-rv class="tq"><div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><blockquote>' + q[0] + '</blockquote><figcaption>' + q[1] + '</figcaption></figure>'; }).join('') + '</div><p class="fine ctr">' + X.tNote + '</p></div>';
+  var ts = $('#testi'); if (ts) ts.remove();
   var cb = $('#cta'); if (cb) cb.innerHTML = '<div class="wrap cta-in" data-rv><h2>' + X.ctaH + '</h2><p>' + X.ctaP + '</p><div class="cta"><a class="btn gold" href="shop.html">' + X.c1 + '</a><a class="btn ghost" href="contact.html">' + X.c2 + '</a></div></div>';
   function countersInit(root) {
     var els = [].slice.call(root.querySelectorAll('[data-n]')), done = false;

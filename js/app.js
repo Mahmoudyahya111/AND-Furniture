@@ -130,7 +130,7 @@
     var s = AND.settings.store, nm = AND.pick(s, 'name');
     var links = [['index.html', 'home', 'home'], ['shop.html', 'shop', 'shop'], ['about.html', 'about', 'about'], ['contact.html', 'contact', 'contact'], ['track.html', 'track', 'track']];
     $('#hdr').outerHTML = '<header class="top"><div class="wrap bar"><button class="iconbtn burger" aria-label="menu" id="burger">&#9776;</button><a class="brand" href="index.html"><img src="img/logo-96.jpg" alt="AND.Furniture logo" width="44" height="44"><span>' + AND.esc(nm) + '</span></a>' +
-      '<nav class="links" id="nav">' + links.map(function (l) { return '<a href="' + l[0] + '"' + (page === l[2] ? ' class="on"' : '') + '>' + t(l[1]) + '</a>'; }).join('') + '</nav><div class="sp"></div>' +
+      '<nav class="links" id="nav">' + links.map(function (l) { return '<a href="' + l[0] + '"' + (page === l[2] ? ' class="on"' : '') + '>' + t(l[1]) + '</a>'; }).join('') + '<div class="nx-set"><a class="nx" href="account.html" id="acct2">' + t('login') + '</a><button type="button" class="nx" id="langbtn2">' + (AND.lang === 'ar' ? 'English' : 'العربية') + '</button><button type="button" class="nx" id="themebtn2"></button></div></nav><div class="sp"></div>' +
       '<button class="iconbtn" id="langbtn">' + (AND.lang === 'ar' ? 'EN' : 'عربي') + '</button><a class="iconbtn" href="account.html" id="acct">' + t('login') + '</a>' +
       '<a class="iconbtn" href="cart.html" aria-label="' + t('cart') + '"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M2 3h3l2.6 12.4a2 2 0 0 0 2 1.6h8a2 2 0 0 0 2-1.5L21 8H6"/></svg><span class="badge cart-badge" style="display:none">0</span></a></div></header>';
     var wa = String(s.whatsapp || '').replace(/\D/g, '');
@@ -140,9 +140,9 @@
       (s.facebook ? '<a href="' + AND.esc(s.facebook) + '" target="_blank" rel="noopener">Facebook</a>' : '') + '</p></div></div><div class="fine">&copy; ' + new Date().getFullYear() + ' ' + AND.esc(nm) + '. ' + t('rights') + '.</div></div></footer>' +
       (wa ? '<a class="wa-fab" target="_blank" rel="noopener" aria-label="WhatsApp" href="https://wa.me/' + wa + '"><svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.2 14c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.2-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.8 0-1.3.7-1.9.9-2.2.2-.2.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.9 2.1c.1.2.1.4 0 .5l-.4.6c-.1.2-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.8-1c.2-.2.4-.2.6-.1l2 .9c.3.1.5.2.5.3.1.2.1.8-.1 1.4z"/></svg></a>' : '');
     $('#burger').onclick = function () { $('#nav').classList.toggle('open'); };
-    $('#langbtn').onclick = function () { AND.setLang(AND.lang === 'ar' ? 'en' : 'ar'); };
+    $('#langbtn').onclick = $('#langbtn2').onclick = function () { AND.setLang(AND.lang === 'ar' ? 'en' : 'ar'); };
     AND.cartBadge(); AND.chatInit();
-    if (AND.live) AND.sb.auth.getSession().then(function (r) { var u = r.data.session; if (u) { $('#acct').textContent = t('account'); } });
+    if (AND.live) AND.sb.auth.getSession().then(function (r) { var u = r.data.session; if (u) { $('#acct').textContent = t('account'); $('#acct2').textContent = t('account'); } });
   };
 
   /* ---------- customer chat widget (polls; guests identified by a random token) ---------- */
