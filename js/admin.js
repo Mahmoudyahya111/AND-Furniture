@@ -12,7 +12,8 @@
   var ST = { new: L('جديد', 'New'), confirmed: L('مؤكد', 'Confirmed'), preparing: L('قيد التجهيز', 'Preparing'), out_for_delivery: L('خرج للتوصيل', 'Out for delivery'), delivered: L('تم التسليم', 'Delivered'), cancelled: L('ملغي', 'Cancelled') };
   var PS = { unpaid: L('غير مدفوع', 'Unpaid'), paid: L('مدفوع', 'Paid'), refunded: L('مسترد', 'Refunded') };
   var PM = { cod: L('عند الاستلام', 'Cash on delivery'), instapay: 'InstaPay', wallet: L('محفظة', 'Wallet'), bank: L('تحويل بنكي', 'Bank') };
-  if (!CFG.url || !window.supabase) { app.innerHTML = '<div class="wrap" style="padding:40px"><div class="note err">' + L('الموقع غير متصل بقاعدة البيانات بعد (js/config.js).', 'The site is not connected to its database yet (js/config.js).') + '</div></div>'; return; }
+  if (!window.supabase) { app.innerHTML = '<div class="wrap" style="padding:40px"><div class="note err">' + L('تعذر تحميل مكتبة قاعدة البيانات. أعد تحميل الصفحة.', 'Could not load the database library. Reload the page.') + '</div></div>'; return; }
+  if (!CFG.url) { app.innerHTML = '<div class="wrap" style="padding:40px"><div class="note err">' + L('الموقع غير متصل بقاعدة البيانات بعد (js/config.js).', 'The site is not connected to its database yet (js/config.js).') + '</div></div>'; return; }
   var sb = window.supabase.createClient(CFG.url, CFG.key), role = '', me = null, cache = {}, tab = 'dash', timers = [];
 
   async function gate() {
