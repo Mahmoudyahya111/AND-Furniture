@@ -49,3 +49,4 @@ details.mk{background:#fff;border:1px solid var(--line);border-radius:14px;margi
 textarea.mkt{width:100%;font:inherit;padding:10px;border:1.5px solid var(--line);border-radius:10px;margin:8px 0}.cvw{margin:12px 0;text-align:center}.cvw canvas{max-width:100%;height:auto;max-height:70vh;border:1px solid var(--line);border-radius:12px;background:#fff}
 .mkb h4{margin:14px 0 4px}
 .mkb input:not([type=checkbox]),.mkb select,.mkb textarea{width:100%;font:inherit;padding:11px 12px;min-height:46px;border:1.5px solid var(--line);border-radius:10px;background:#fff;margin:4px 0 8px}.mkb label{display:block;font-weight:700;font-size:.85rem;margin-top:6px}.chk label{display:flex}
+.mk table a{white-space:nowrap}
