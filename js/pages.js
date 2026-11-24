@@ -30,6 +30,8 @@
     draw();
   };
 
+  var COL = { 'رمادي': 'Grey', 'بيج': 'Beige', 'بني': 'Brown', 'أسود': 'Black', 'أبيض': 'White', 'ذهبي': 'Gold', 'كحلي': 'Navy', 'أخضر': 'Green', 'أزرق': 'Blue', 'أحمر': 'Red', 'برتقالي': 'Orange', 'جوزي': 'Walnut', 'بلوط': 'Oak', 'رمادي فاتح': 'Light grey', 'رمادي غامق': 'Dark grey', 'وردي': 'Pink', 'عاجي': 'Ivory', 'كريمي': 'Cream' };
+  function cname(k) { return AND.lang === 'ar' ? k : (COL[k] || k); }
   function specRows(p, out) {
     var r = [], n = function (v) { return v == null || v === '' ? null : Number(v); }, cm = ' ' + t('cm');
     var w = n(p.width_cm), d = n(p.depth_cm), h = n(p.height_cm);
@@ -37,7 +39,7 @@
     else if (p.dimensions) r.push([t('dims'), esc(p.dimensions)]);
     if (n(p.weight_kg)) r.push([t('weight'), p.weight_kg + ' ' + t('kg')]);
     if (AND.pick(p, 'material')) r.push([t('material'), esc(AND.pick(p, 'material'))]);
-    if (p.colors && p.colors.length) r.push([t('finish'), p.colors.map(esc).join(' / ')]);
+    if (p.colors && p.colors.length) r.push([t('finish'), p.colors.map(function (k) { return esc(cname(k)); }).join(' / ')]);
     if (AND.pick(p, 'assembly')) r.push([t('assembly'), esc(AND.pick(p, 'assembly'))]);
     if (n(p.warranty_months)) r.push([t('warranty'), p.warranty_months + ' ' + t('months')]);
     if (AND.pick(p, 'origin')) r.push([t('origin'), esc(AND.pick(p, 'origin'))]);
@@ -56,7 +58,7 @@
     function draw(cur) {
       $('#pd').innerHTML = '<div><div class="main"><img id="mainimg" src="' + esc(imgs[cur || 0]) + '" alt="' + esc(AND.pick(p, 'name')) + '"></div>' + (imgs.length > 1 ? '<div class="thumbs">' + imgs.map(function (u, i) { return '<img src="' + esc(u) + '" data-i="' + i + '" class="' + (i === (cur || 0) ? 'on' : '') + '" alt="">'; }).join('') + '</div>' : '') +
         (p.is_placeholder ? '<p class="ph-note">' + t('ph') + '</p>' : '') + '</div><div><a href="shop.html" style="color:var(--muted)">&larr; ' + t('back') + '</a><h1>' + esc(AND.pick(p, 'name')) + '</h1><div class="price">' + AND.money(p.price) + (sale ? '<s>' + AND.money(p.compare_at) + '</s>' : '') + '</div>' +
-        '<p>' + esc(AND.pick(p, 'desc')) + '</p>' + (p.colors && p.colors.length ? '<b>' + t('color') + '</b><div class="swatches">' + p.colors.map(function (k) { return '<button data-col="' + esc(k) + '" class="' + (k === color ? 'on' : '') + '">' + esc(k) + '</button>'; }).join('') + '</div>' : '') +
+        '<p>' + esc(AND.pick(p, 'desc')) + '</p>' + (p.colors && p.colors.length ? '<b>' + t('color') + '</b><div class="swatches">' + p.colors.map(function (k) { return '<button data-col="' + esc(k) + '" class="' + (k === color ? 'on' : '') + '">' + esc(cname(k)) + '</button>'; }).join('') + '</div>' : '') +
         '<div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:14px 0"><div class="qty"><button id="mi">&minus;</button><span id="qv">' + qty + '</span><button id="pl">+</button></div><button class="btn gold" id="addb"' + (out ? ' disabled' : '') + '>' + (out ? t('out') : t('add')) + '</button>' +
         '<a class="btn wa" target="_blank" rel="noopener" href="' + esc(AND.waLink(t('whapp') + ' ' + AND.pick(p, 'name'))) + '">' + t('wa') + '</a></div>' +
         '<div class="spec">' + specRows(p, out).map(function (r) { return '<div><span>' + r[0] + '</span><span dir="auto">' + r[1] + '</span></div>'; }).join('') + '</div></div>';

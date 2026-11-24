@@ -15,3 +15,4 @@ Each change is its own commit. Undo one with `git revert <hash>`.
 | 9 | Admin sign-in / create-account redesigned: separate modes with their own forms (confirm password, validation, friendly errors incl. email rate limit, back-to-sign-in); same redesign on the customer account page |
 | 10 | Roles owner/admin/staff (sql/05), team-admin edge function (owner only, service role kept server-side), Admin > Team: create members with a set password, change role, reset password, remove |
 | 11 | Sample products: structured dimensions replace the free-text size; admin table cells wrap long emails |
+| 12 | Audit fixes (store): English colour names, compare-at price wraps inside cards, no repeated placeholder note on cards, footer links tap size and clearance for floating buttons, smaller hero logo on phones |
