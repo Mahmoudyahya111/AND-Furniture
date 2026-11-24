@@ -69,6 +69,25 @@
       };
     }
     draw(0);
+    // premium extras (additive): facts from settings only, related items, sticky buy bar, share
+    (function () {
+      var ar = AND.lang === 'ar', S = AND.settings || {}, pm = S.payment_methods || { cod: true }, L = function (a, e) { return ar ? a : e; };
+      var cat = c.cats.filter(function (x) { return x.id === p.category_id; })[0];
+      var facts = [];
+      if (S.delivery_fee > 0) facts.push(L('رسوم التوصيل ', 'Delivery fee ') + AND.money(S.delivery_fee)); else facts.push(L('توصيل مجاني', 'Free delivery'));
+      if (S.free_delivery_over > 0) facts.push(L('توصيل مجاني فوق ', 'Free delivery over ') + AND.money(S.free_delivery_over));
+      if (pm.cod) facts.push(L('الدفع عند الاستلام', 'Cash on delivery'));
+      var wrap = document.createElement('div'); wrap.className = 'pdx wrap';
+      wrap.innerHTML = '<div class="pdx-facts">' + facts.map(function (f) { return '<span>' + esc(f) + '</span>'; }).join('') + '<button type="button" id="pdshare">' + L('مشاركة', 'Share') + '</button></div>';
+      var rel = c.prods.filter(function (x) { return x.id !== p.id && x.category_id === p.category_id && x.active !== false; }).slice(0, 4);
+      if (rel.length) wrap.innerHTML += '<h2 class="pdx-h">' + L('منتجات مشابهة', 'You may also like') + '</h2><div class="grid">' + rel.map(AND.productCard).join('') + '</div>';
+      $('#pd').parentNode.parentNode.appendChild(wrap);
+      var bar = document.createElement('div'); bar.className = 'pdx-bar'; bar.innerHTML = '<div><b>' + AND.money(p.price) + '</b><small>' + esc(AND.pick(p, 'name')) + '</small></div><button class="btn gold" id="pdbuy"' + (out ? ' disabled' : '') + '>' + (out ? t('out') : t('add')) + '</button>';
+      document.body.appendChild(bar);
+      $('#pdbuy').onclick = function () { var b = $('#addb'); if (b && !b.disabled) b.click(); };
+      var main = $('#pd'); function vis() { var r = main.querySelector('#addb'); if (!r) return; var b = r.getBoundingClientRect(); bar.classList.toggle('on', b.bottom < 0 || b.top > innerHeight); } addEventListener('scroll', vis, { passive: true }); vis();
+      $('#pdshare').onclick = function () { var u = location.href, n = AND.pick(p, 'name'); if (navigator.share) navigator.share({ title: n, url: u }).catch(function () { }); else if (navigator.clipboard) navigator.clipboard.writeText(u).then(function () { AND.toast(L('تم نسخ الرابط', 'Link copied')); }); };
+    })();
   };
 
   pages.cart = async function () {
