@@ -18,3 +18,7 @@ Each change is its own commit. Undo one with `git revert <hash>`.
 | 12 | Audit fixes (store): English colour names, compare-at price wraps inside cards, no repeated placeholder note on cards, footer links tap size and clearance for floating buttons, smaller hero logo on phones |
 | 13 | Audit fixes: chat panel fits phones, WhatsApp floating button hidden where the page already has a WhatsApp button, cart shows translated colour names |
 | 14 | Admin: the active tab scrolls into view on phones |
+| 15 | Role "chat support": read-only orders and chats only, enforced in RLS (can_chat()) and RPCs; is_staff() unchanged so every write path still excludes it; edge function and Team UI accept the role (sql/06) |
+| 16 | Chat KPI tracker (sql/06 chat_kpis, chat_conversations): per-conversation status/first response/resolution/message counts; per-agent chats, resolved rate, first and average response, resolution time, workload, last active; date and agent filters, daily volume chart |
+| 17 | Chat availability setting (follow working hours or manual on/off) and offline notice in the store chat widget (sql/07 chat_status) |
+| 18 | PDF reports bundled locally (jsPDF, Arabic font) for orders, accounting and chat KPIs; phone-friendly "ready" sheet with Download/Open buttons instead of relying on auto-download |

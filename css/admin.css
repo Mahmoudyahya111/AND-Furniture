@@ -39,3 +39,6 @@ fieldset{border:1px solid var(--line);border-radius:12px;padding:12px 14px 14px;
 .auth .f h2{margin:4px 0 0;font-size:1.25rem}.auth .f input{width:100%;min-height:48px;font-size:16px}.auth .f a{text-align:center;padding:6px;color:var(--copper);font-weight:600}.btn.block{width:100%;min-height:50px}
 .acts{display:flex;gap:6px;flex-wrap:wrap}.acts .btn{white-space:nowrap}
 .tbl td{overflow-wrap:anywhere}@media(max-width:700px){.tbl td>*{max-width:68%}}
+.presets{display:inline-flex;gap:6px;flex-wrap:wrap}.mbar{height:6px;background:#eee4d2;border-radius:4px;margin-bottom:3px;min-width:50px}.mbar i{display:block;height:100%;background:var(--gold);border-radius:4px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin-bottom:14px}
+@media(max-width:700px){.kpis{grid-template-columns:1fr 1fr}.presets{width:100%}.presets .btn{flex:1}}
