@@ -27,7 +27,7 @@
       d_sat: 'السبت', d_sun: 'الأحد', d_mon: 'الإثنين', d_tue: 'الثلاثاء', d_wed: 'الأربعاء', d_thu: 'الخميس', d_fri: 'الجمعة',
       chatT: 'الدعم المباشر', chatHi: 'أهلاً بك! اكتب رسالتك وسنرد عليك في أقرب وقت.', chatPh: 'اكتب رسالتك...', send: 'إرسال', yourname: 'اسمك',
       err: 'حدث خطأ، حاول مرة أخرى.', demo: 'المتجر يعمل بوضع العرض ولم يتصل بقاعدة البيانات بعد، لا يمكن إرسال الطلبات الآن.', wa: 'اطلب عبر واتساب', follow: 'تابعنا', links: 'روابط', needlogin: 'سجّل الدخول أولاً',
-      rights: 'جميع الحقوق محفوظة', shipnote: 'رسوم التوصيل تُحسب تلقائياً', whapp: 'مرحباً AND.Furniture، أريد الاستفسار عن' },
+      weight: 'الوزن', warranty: 'الضمان', origin: 'بلد الصنع', assembly: 'التركيب', care: 'العناية والتنظيف', lead: 'مدة التجهيز', sku: 'كود المنتج', finish: 'اللون / الخامة', specs: 'المواصفات', months: 'شهر', days: 'يوم', cm: 'سم', kg: 'كجم', only: 'متبقي', onlyN: 'آخر القطع: متبقي', wd: 'العرض', dp: 'العمق', ht: 'الارتفاع', rights: 'جميع الحقوق محفوظة', shipnote: 'رسوم التوصيل تُحسب تلقائياً', whapp: 'مرحباً AND.Furniture، أريد الاستفسار عن' },
     en: { home: 'Home', shop: 'Shop', about: 'About', contact: 'Contact', track: 'Track order', cart: 'Cart', account: 'My account', login: 'Sign in', logout: 'Sign out',
       shopnow: 'Shop now', chatus: 'Chat with us', browse: 'Browse categories', featured: 'Featured pieces', viewall: 'View all', add: 'Add to cart', added: 'Added to cart', out: 'Out of stock', sale: 'Sale',
       search: 'Search products...', allcats: 'All categories', sort: 'Sort', s_new: 'Newest', s_low: 'Price: low to high', s_high: 'Price: high to low', nores: 'No matching products.',
@@ -46,7 +46,7 @@
       d_sat: 'Saturday', d_sun: 'Sunday', d_mon: 'Monday', d_tue: 'Tuesday', d_wed: 'Wednesday', d_thu: 'Thursday', d_fri: 'Friday',
       chatT: 'Live support', chatHi: 'Welcome! Write your message and we will reply as soon as we can.', chatPh: 'Type your message...', send: 'Send', yourname: 'Your name',
       err: 'Something went wrong, please try again.', demo: 'The store is in demo mode and not connected to its database yet, so orders cannot be placed.', wa: 'Order on WhatsApp', follow: 'Follow us', links: 'Links', needlogin: 'Please sign in first',
-      rights: 'All rights reserved', shipnote: 'Delivery fee is calculated automatically', whapp: 'Hello AND.Furniture, I would like to ask about' }
+      weight: 'Weight', warranty: 'Warranty', origin: 'Made in', assembly: 'Assembly', care: 'Care', lead: 'Preparation time', sku: 'SKU', finish: 'Colour / finish', specs: 'Specifications', months: 'months', days: 'days', cm: 'cm', kg: 'kg', only: 'left', onlyN: 'Only', wd: 'Width', dp: 'Depth', ht: 'Height', rights: 'All rights reserved', shipnote: 'Delivery fee is calculated automatically', whapp: 'Hello AND.Furniture, I would like to ask about' }
   };
   AND.GOVS = ['القاهرة|Cairo', 'الجيزة|Giza', 'الإسكندرية|Alexandria', 'القليوبية|Qalyubia', 'الشرقية|Sharqia', 'الدقهلية|Dakahlia', 'الغربية|Gharbia', 'المنوفية|Monufia', 'البحيرة|Beheira', 'كفر الشيخ|Kafr El Sheikh', 'دمياط|Damietta', 'بورسعيد|Port Said', 'الإسماعيلية|Ismailia', 'السويس|Suez', 'شمال سيناء|North Sinai', 'جنوب سيناء|South Sinai', 'الفيوم|Fayoum', 'بني سويف|Beni Suef', 'المنيا|Minya', 'أسيوط|Asyut', 'سوهاج|Sohag', 'قنا|Qena', 'الأقصر|Luxor', 'أسوان|Aswan', 'البحر الأحمر|Red Sea', 'الوادي الجديد|New Valley', 'مطروح|Matrouh'];
   AND.lang = (function () { var l = localStorage.getItem('and_lang'); return l === 'en' ? 'en' : 'ar'; })();
@@ -115,7 +115,7 @@
     return '<article class="card"><a class="im" href="product.html?id=' + p.id + '" aria-label="' + AND.esc(AND.pick(p, 'name')) + '"><img loading="lazy" src="' + AND.esc(img) + '" alt="' + AND.esc(AND.pick(p, 'name')) + '">' +
       (out ? '<span class="tag out">' + t('out') + '</span>' : sale ? '<span class="tag">' + t('sale') + '</span>' : '') + '</a><div class="bd"><h3><a href="product.html?id=' + p.id + '" style="text-decoration:none">' + AND.esc(AND.pick(p, 'name')) + '</a></h3>' +
       '<div class="price">' + AND.money(p.price) + (sale ? '<s>' + AND.money(p.compare_at) + '</s>' : '') + '</div>' +
-      (p.is_placeholder ? '<div class="ph-note">' + t('ph') + '</div>' : '') +
+      (!out && p.stock <= (p.low_stock_threshold == null ? 3 : p.low_stock_threshold) ? '<div class="low">' + (AND.lang === 'ar' ? t('onlyN') + ' ' + p.stock : t('onlyN') + ' ' + p.stock + ' ' + t('only')) + '</div>' : '') + (p.is_placeholder ? '<div class="ph-note">' + t('ph') + '</div>' : '') +
       '<button class="btn sm gold" data-add="' + p.id + '"' + (out ? ' disabled' : '') + '>' + (out ? t('out') : t('add')) + '</button></div></article>';
   };
   AND.bindAdd = function (root) {

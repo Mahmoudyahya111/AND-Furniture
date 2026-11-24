@@ -30,6 +30,24 @@
     draw();
   };
 
+  function specRows(p, out) {
+    var r = [], n = function (v) { return v == null || v === '' ? null : Number(v); }, cm = ' ' + t('cm');
+    var w = n(p.width_cm), d = n(p.depth_cm), h = n(p.height_cm);
+    if (w || d || h) r.push([t('dims'), [w && t('wd') + ' ' + w, d && t('dp') + ' ' + d, h && t('ht') + ' ' + h].filter(Boolean).join(' × ') + cm]);
+    else if (p.dimensions) r.push([t('dims'), esc(p.dimensions)]);
+    if (n(p.weight_kg)) r.push([t('weight'), p.weight_kg + ' ' + t('kg')]);
+    if (AND.pick(p, 'material')) r.push([t('material'), esc(AND.pick(p, 'material'))]);
+    if (p.colors && p.colors.length) r.push([t('finish'), p.colors.map(esc).join(' / ')]);
+    if (AND.pick(p, 'assembly')) r.push([t('assembly'), esc(AND.pick(p, 'assembly'))]);
+    if (n(p.warranty_months)) r.push([t('warranty'), p.warranty_months + ' ' + t('months')]);
+    if (AND.pick(p, 'origin')) r.push([t('origin'), esc(AND.pick(p, 'origin'))]);
+    if (n(p.lead_time_days)) r.push([t('lead'), p.lead_time_days + ' ' + t('days')]);
+    if (AND.pick(p, 'care')) r.push([t('care'), esc(AND.pick(p, 'care'))]);
+    if (p.sku) r.push([t('sku'), '<span dir="ltr">' + esc(p.sku) + '</span>']);
+    var th = p.low_stock_threshold == null ? 3 : p.low_stock_threshold;
+    r.push([t('instock'), out ? t('out') : p.stock <= th ? '<b style="color:var(--copper)">' + (AND.lang === 'ar' ? t('onlyN') + ' ' + p.stock : t('onlyN') + ' ' + p.stock + ' ' + t('only')) + '</b>' : '✓']);
+    return r;
+  }
   pages.product = async function () {
     var c = await AND.catalog(), id = new URLSearchParams(location.search).get('id'), p = c.byId[id];
     if (!p) { $('#pd').innerHTML = '<div class="empty">' + t('nores') + '</div>'; return; }
@@ -41,8 +59,7 @@
         '<p>' + esc(AND.pick(p, 'desc')) + '</p>' + (p.colors && p.colors.length ? '<b>' + t('color') + '</b><div class="swatches">' + p.colors.map(function (k) { return '<button data-col="' + esc(k) + '" class="' + (k === color ? 'on' : '') + '">' + esc(k) + '</button>'; }).join('') + '</div>' : '') +
         '<div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:14px 0"><div class="qty"><button id="mi">&minus;</button><span id="qv">' + qty + '</span><button id="pl">+</button></div><button class="btn gold" id="addb"' + (out ? ' disabled' : '') + '>' + (out ? t('out') : t('add')) + '</button>' +
         '<a class="btn wa" target="_blank" rel="noopener" href="' + esc(AND.waLink(t('whapp') + ' ' + AND.pick(p, 'name'))) + '">' + t('wa') + '</a></div>' +
-        '<div class="spec">' + (p.dimensions ? '<div><span>' + t('dims') + '</span><span dir="auto">' + esc(p.dimensions) + '</span></div>' : '') + (AND.pick(p, 'material') ? '<div><span>' + t('material') + '</span><span>' + esc(AND.pick(p, 'material')) + '</span></div>' : '') +
-        '<div><span>' + t('instock') + '</span><span>' + (out ? t('out') : p.stock <= 5 ? p.stock + ' ' + t('left') : '✓') + '</span></div></div></div>';
+        '<div class="spec">' + specRows(p, out).map(function (r) { return '<div><span>' + r[0] + '</span><span dir="auto">' + r[1] + '</span></div>'; }).join('') + '</div></div>';
       $('#pd').onclick = function (e) {
         var x = e.target; if (x.getAttribute('data-i') != null) draw(+x.getAttribute('data-i'));
         if (x.getAttribute('data-col')) { color = x.getAttribute('data-col'); AND.$$('.swatches button').forEach(function (b) { b.classList.toggle('on', b.getAttribute('data-col') === color); }); }

@@ -74,3 +74,4 @@ footer.foot{background:#3d3128;color:#e6d9c4;margin-top:50px;padding:36px 0 22px
 .hero .art{aspect-ratio:1;height:auto;width:100%}.price s,.price{white-space:nowrap}.cats .panel{text-align:center;display:grid;gap:6px;justify-items:center}.iconbtn svg{display:block}
 
 @media(max-width:560px){.line{flex-wrap:wrap}.line .nm{flex-basis:calc(100% - 92px)}}
+.low{color:var(--copper);font-weight:700;font-size:.82rem;margin-top:2px}.spec>div{gap:12px}.spec>div>span:last-child{text-align:end}
